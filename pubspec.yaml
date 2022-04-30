@@ -17,6 +17,9 @@ dependencies:
   dismiss_keyboard_on_tap: ^1.0.1
   get: ^4.6.1
   appwrite: ^4.0.2
+  flutter_login: ^3.2.0
+  get_storage: ^2.0.3
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
