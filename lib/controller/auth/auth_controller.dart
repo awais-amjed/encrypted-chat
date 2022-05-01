@@ -1,5 +1,9 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:crypton/crypton.dart';
 import 'package:ecat/controller/app_write_controller.dart';
+import 'package:ecat/controller/encryption/encryption_controller.dart';
+import 'package:ecat/controller/storage/database_controller.dart';
+import 'package:ecat/controller/storage/local_storage_controller.dart';
 import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:get/get.dart';
@@ -20,16 +24,24 @@ class AuthController extends GetxController {
     required String password,
     required String name,
   }) async {
+    // Create new account
     String? error;
     await account
         .create(
-          userId: 'unique()',
-          email: email,
-          password: password,
-          name: name,
-        )
-        .then((value) => null)
-        .catchError((e) {
+      userId: 'unique()',
+      email: email,
+      password: password,
+      name: name,
+    )
+        .then((value) {
+      _appWriteController.database.createDocument(
+        collectionId: 'users',
+        documentId: value.$id,
+        data: {
+          'name': name,
+        },
+      );
+    }).catchError((e) {
       error = e.toString();
     });
     return error;
@@ -39,18 +51,48 @@ class AuthController extends GetxController {
     required String email,
     required String password,
   }) async {
+    // Create a session
     String? error;
     await account
         .createSession(
       email: email,
       password: password,
     )
-        .then((session) {
-      UserController _ = Get.put(
+        .then((session) async {
+      Get.put(
         UserController(currentSession: session),
         tag: K.userControllerTag,
         permanent: true,
       );
+
+      //Check for Public Key
+      DatabaseController _databaseController =
+          Get.find(tag: K.databaseControllerTag);
+      final bool? result = await _databaseController.isPublicKeyAvailable();
+      if (result == null) {
+        error = 'Database Error';
+      }
+      if (result == false) {
+        // If not found create new key pair
+        EncryptionController _encryptionController =
+            Get.find(tag: K.encryptionControllerTag);
+        RSAKeypair keypair = _encryptionController.generateNewKeys();
+
+        LocalStorageController _localStorageControllerTag =
+            Get.find(tag: K.localStorageControllerTag);
+        _databaseController
+            .updatePublicKey(publicKey: keypair.publicKey.toString())
+            .then((value) => null)
+            .catchError(
+          (e) {
+            error = 'Database Error';
+          },
+        );
+        if (error == null) {
+          _localStorageControllerTag.savePrivateKey(
+              privateKey: keypair.privateKey.toString());
+        }
+      }
     }).catchError((e) {
       error = e.toString();
     });

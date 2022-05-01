@@ -11,17 +11,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
 
-  runApp(ECat());
-}
-
-class ECat extends StatelessWidget {
-  ECat({Key? key}) : super(key: key);
-
-  final AppWriteController _ = Get.put(
+  Get.put(
     AppWriteController(),
     tag: K.appWriteControllerTag,
     permanent: true,
   );
+
+  runApp(const ECat());
+}
+
+class ECat extends StatelessWidget {
+  const ECat({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

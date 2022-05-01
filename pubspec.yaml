@@ -20,6 +20,8 @@ dependencies:
   flutter_login: ^3.2.0
   get_storage: ^2.0.3
   fluttertoast: ^8.0.9
+  crypton: ^2.0.3
+  flutter_animated_dialog: ^2.0.1
 
 dev_dependencies:
   flutter_test:

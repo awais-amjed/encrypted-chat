@@ -52,6 +52,8 @@ class AuthScreen extends StatelessWidget {
         ],
         hideForgotPasswordButton: true,
         onRecoverPassword: (_) {},
+        savedEmail: 'meow@gmail.com',
+        savedPassword: 'meow86602',
       ),
     );
   }
