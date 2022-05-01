@@ -40,6 +40,7 @@ class AuthController extends GetxController {
         data: {
           'name': name,
         },
+        read: ['role:all'],
       );
     }).catchError((e) {
       error = e.toString();
@@ -68,11 +69,11 @@ class AuthController extends GetxController {
       //Check for Public Key
       DatabaseController _databaseController =
           Get.find(tag: K.databaseControllerTag);
-      final bool? result = await _databaseController.isPublicKeyAvailable();
-      if (result == null) {
+      final bool? isKeyFound = await _databaseController.isPublicKeyAvailable();
+      if (isKeyFound == null) {
         error = 'Database Error';
       }
-      if (result == false) {
+      if (isKeyFound == false) {
         // If not found create new key pair
         EncryptionController _encryptionController =
             Get.find(tag: K.encryptionControllerTag);
@@ -88,6 +89,11 @@ class AuthController extends GetxController {
             error = 'Database Error';
           },
         );
+        if (isKeyFound == true) {
+          // If public key is found
+          //TODO Implement key sharing
+        }
+
         if (error == null) {
           _localStorageControllerTag.savePrivateKey(
               privateKey: keypair.privateKey.toString());
