@@ -81,23 +81,23 @@ class AuthController extends GetxController {
 
         LocalStorageController _localStorageControllerTag =
             Get.find(tag: K.localStorageControllerTag);
-        _databaseController
+        await _databaseController
             .updatePublicKey(publicKey: keypair.publicKey.toString())
             .then((value) => null)
             .catchError(
           (e) {
-            error = 'Database Error';
+            error = e.toString();
           },
         );
-        if (isKeyFound == true) {
-          // If public key is found
-          //TODO Implement key sharing
-        }
 
         if (error == null) {
           _localStorageControllerTag.savePrivateKey(
               privateKey: keypair.privateKey.toString());
         }
+      }
+      if (isKeyFound == true) {
+        // If public key is found
+        //TODO Implement key sharing
       }
     }).catchError((e) {
       error = e.toString();
