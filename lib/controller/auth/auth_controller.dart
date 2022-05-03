@@ -28,21 +28,13 @@ class AuthController extends GetxController {
     String? error;
     await account
         .create(
-      userId: 'unique()',
-      email: email,
-      password: password,
-      name: name,
-    )
-        .then((value) {
-      _appWriteController.database.createDocument(
-        collectionId: 'users',
-        documentId: value.$id,
-        data: {
-          'name': name,
-        },
-        read: ['role:all'],
-      );
-    }).catchError((e) {
+          userId: 'unique()',
+          email: email,
+          password: password,
+          name: name,
+        )
+        .then((value) => null)
+        .catchError((e) {
       error = e.toString();
     });
     return error;
