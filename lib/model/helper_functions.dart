@@ -1,6 +1,32 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class HelperFunctions {
+  static getAppBar({
+    required String title,
+    Widget? leading,
+    List<Widget>? actions,
+  }) {
+    return AppBar(
+      centerTitle: true,
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.black),
+      ),
+      toolbarHeight: 80,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      actions: actions,
+      iconTheme: const IconThemeData(
+        color: Colors.black,
+      ),
+      actionsIconTheme: const IconThemeData(
+        color: Colors.black,
+      ),
+      leading: leading,
+    );
+  }
+
   static getDateOrTime({required DateTime dateTime}) {
     Duration difference = DateTime.now().difference(dateTime);
     if (difference.inMinutes == 0) {

@@ -12,6 +12,7 @@ class K {
   static const String localStorageControllerTag = 'localStorageControllerTag';
   static const String databaseControllerTag = 'databaseControllerTag';
   static const String encryptionControllerTag = 'encryptionControllerTag';
+  static const String usersListControllerTag = 'usersListControllerTag';
 
   // Functions
   static void showToast({required String message, Toast? toastLength}) {

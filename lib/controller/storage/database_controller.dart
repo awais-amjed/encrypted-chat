@@ -51,4 +51,16 @@ class DatabaseController extends GetxController {
       },
     );
   }
+
+  Future<DocumentList?> getAllUsers() async {
+    DocumentList? documents;
+    await database.listDocuments(
+      collectionId: 'users',
+      orderAttributes: ['name'],
+      orderTypes: ['ASC'],
+    ).then((value) {
+      documents = value;
+    }).catchError(K.showErrorToast);
+    return documents;
+  }
 }

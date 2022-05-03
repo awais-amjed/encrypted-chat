@@ -1,32 +1,41 @@
+import 'package:ecat/model/constants.dart';
+import 'package:ecat/model/helper_functions.dart';
+import 'package:ecat/view/screens/users_list.dart';
 import 'package:ecat/view/widgets/home_screen/chat_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controller/users_list/users_list_controller.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+
+  final UsersListController _usersListController =
+      Get.put(UsersListController(), tag: K.usersListControllerTag);
 
   @override
   Widget build(BuildContext context) {
+    _usersListController.getUsers();
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Encrypted Chat',
-          style: TextStyle(color: Colors.black),
-        ),
-        toolbarHeight: 80,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+      appBar: HelperFunctions.getAppBar(
+        title: 'Encrypted Chat',
         actions: [
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.search),
-            color: Colors.black,
           ),
         ],
         leading: IconButton(
           onPressed: () {},
           icon: const Icon(Icons.settings),
-          color: Colors.black,
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(() => UsersList());
+        },
+        child: const Icon(
+          Icons.message,
         ),
       ),
       body: Column(
