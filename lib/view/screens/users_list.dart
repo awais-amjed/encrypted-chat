@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UsersList extends StatelessWidget {
-  UsersList({Key? key}) : super(key: key);
-
-  final UsersListController _usersListController =
-      Get.find(tag: K.usersListControllerTag);
+  const UsersList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final UsersListController _usersListController =
+        Get.find(tag: K.usersListControllerTag);
+
     return Scaffold(
       appBar: HelperFunctions.getAppBar(
         title: 'New Message',

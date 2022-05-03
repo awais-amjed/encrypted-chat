@@ -8,13 +8,13 @@ import 'package:get/get.dart';
 import '../../controller/users_list/users_list_controller.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
-
-  final UsersListController _usersListController =
-      Get.put(UsersListController(), tag: K.usersListControllerTag);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final UsersListController _usersListController =
+        Get.put(UsersListController(), tag: K.usersListControllerTag);
+
     _usersListController.getUsers();
     return Scaffold(
       appBar: HelperFunctions.getAppBar(

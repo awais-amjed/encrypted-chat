@@ -5,12 +5,11 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:get/get.dart';
 
 class AuthScreen extends StatelessWidget {
-  AuthScreen({Key? key}) : super(key: key);
-
-  final AuthController _authController = Get.put(AuthController());
+  const AuthScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final AuthController _authController = Get.put(AuthController());
     return Scaffold(
       body: FlutterLogin(
         title: 'E Cat',
