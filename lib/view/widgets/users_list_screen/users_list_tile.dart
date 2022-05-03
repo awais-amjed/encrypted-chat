@@ -14,7 +14,7 @@ class UserListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.off(() => const ChatScreen());
+        Get.off(() => ChatScreen(selectedUser: user));
       },
       child: Padding(
         padding: const EdgeInsets.all(10.0),
