@@ -26,14 +26,20 @@ class UserController extends GetxController {
     LocalStorageController _localStorageController =
         Get.find(tag: K.localStorageControllerTag);
     final CustomUser? _user = _localStorageController.getUser();
+    bool isInitialized = false;
     if (_user != null) {
       userData = Rx<CustomUser>(_user);
+      isInitialized = true;
     }
 
     Document? remoteData =
         await _databaseController.getUser(userID: currentSession.userId);
     if (remoteData != null) {
-      userData = Rx<CustomUser>(CustomUser.fromJson(remoteData.data));
+      if (isInitialized) {
+        userData.value = CustomUser.fromJson(remoteData.data);
+      } else {
+        userData = Rx<CustomUser>(CustomUser.fromJson(remoteData.data));
+      }
       _localStorageController.saveUser(user: userData.value);
     }
   }
