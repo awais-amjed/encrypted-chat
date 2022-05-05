@@ -11,6 +11,7 @@ class DatabaseController extends GetxController {
   // keys
   final String _usersCollection = 'users'; // this is also used during auth
   final String _publicKey = 'public_key';
+  final String usersCollection = 'users';
 
   DatabaseController({required this.session});
 
@@ -55,12 +56,25 @@ class DatabaseController extends GetxController {
   Future<DocumentList?> getAllUsers() async {
     DocumentList? documents;
     await database.listDocuments(
-      collectionId: 'users',
+      collectionId: usersCollection,
       orderAttributes: ['name'],
       orderTypes: ['ASC'],
     ).then((value) {
       documents = value;
     }).catchError(K.showErrorToast);
     return documents;
+  }
+
+  Future<Document?> getUser({required String userID}) async {
+    Document? document;
+    await database
+        .getDocument(
+      collectionId: 'users',
+      documentId: userID,
+    )
+        .then((value) {
+      document = value;
+    }).catchError(K.showErrorToast);
+    return document;
   }
 }

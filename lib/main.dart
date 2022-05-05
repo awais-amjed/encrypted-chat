@@ -27,7 +27,7 @@ class ECat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return DismissKeyboardOnTap(
-        child: GetMaterialApp(
+        child: const GetMaterialApp(
           home: AuthScreen(),
         ),
       );

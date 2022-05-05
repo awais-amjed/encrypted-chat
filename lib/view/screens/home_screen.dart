@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => UsersList());
+          Get.to(() => const UsersList());
         },
         child: const Icon(
           Icons.message,
