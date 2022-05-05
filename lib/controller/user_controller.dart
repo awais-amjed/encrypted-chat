@@ -8,7 +8,7 @@ import '../model/constants.dart';
 
 class UserController extends GetxController {
   final Session currentSession;
-  final Rxn<CustomUser> userData = Rxn<CustomUser>();
+  late final Rx<CustomUser> userData;
 
   UserController({required this.currentSession});
 
@@ -25,13 +25,16 @@ class UserController extends GetxController {
     // Gets locally saved user data and updates it with new user data
     LocalStorageController _localStorageController =
         Get.find(tag: K.localStorageControllerTag);
-    userData.value = _localStorageController.getUser();
+    final CustomUser? _user = _localStorageController.getUser();
+    if (_user != null) {
+      userData = Rx<CustomUser>(_user);
+    }
 
     Document? remoteData =
         await _databaseController.getUser(userID: currentSession.userId);
     if (remoteData != null) {
-      userData.value = CustomUser.fromJson(remoteData.data);
-      _localStorageController.saveUser(user: userData.value!);
+      userData = Rx<CustomUser>(CustomUser.fromJson(remoteData.data));
+      _localStorageController.saveUser(user: userData.value);
     }
   }
 }
