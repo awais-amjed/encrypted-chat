@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 class ChatController extends GetxController {
   final String _partitionsKey = 'partitions';
   final String _dataKey = 'data';
+  final int _maxMessagesPerPartition = 500;
 
   final CustomUser user1;
   final CustomUser user2;
@@ -163,8 +164,14 @@ class ChatController extends GetxController {
       return null;
     }
 
-    if (messages.length == 500) {
+    if (messages.length == _maxMessagesPerPartition) {
       partitions.add((int.parse(partitions.last) + 1).toString());
+      await _databaseController.createDocument(
+          collectionID: collectionID,
+          documentID: partitions.last,
+          data: {
+            _dataKey: [],
+          });
       if (await _databaseController.updateDocument(
               collectionID: collectionID,
               documentID: _partitionsKey,
