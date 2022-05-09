@@ -1,4 +1,5 @@
 import 'package:ecat/model/classes/custom_user.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -29,12 +30,14 @@ class LocalStorageController extends GetxController {
     return null;
   }
 
-  String? readMessages({required String collectionID}) {
+  List<types.TextMessage>? readMessages({required String collectionID}) {
     return messageStorage.read(collectionID);
   }
 
-  void writeMessages(
-      {required String collectionID, required String data}) async {
+  void writeMessages({
+    required String collectionID,
+    required List<types.TextMessage> data,
+  }) async {
     await messageStorage.write(collectionID, data);
   }
 }

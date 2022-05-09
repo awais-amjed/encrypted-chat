@@ -12,11 +12,13 @@ class UserController extends GetxController {
 
   UserController({required this.currentSession});
 
+  late DatabaseController _databaseController;
+
   @override
   void onInit() async {
     super.onInit();
 
-    DatabaseController _databaseController = Get.put(
+    _databaseController = Get.put(
       DatabaseController(session: currentSession),
       tag: K.databaseControllerTag,
       permanent: true,
@@ -35,12 +37,26 @@ class UserController extends GetxController {
     Document? remoteData =
         await _databaseController.getUser(userID: currentSession.userId);
     if (remoteData != null) {
+      List<String>? previousChatIDs = _user?.chatIDs;
       if (isInitialized) {
         userData.value = CustomUser.fromJson(remoteData.data);
       } else {
         userData = Rx<CustomUser>(CustomUser.fromJson(remoteData.data));
       }
       _localStorageController.saveUser(user: userData.value);
+
+      if (previousChatIDs != null) {
+        synchronizeData();
+      }
     }
   }
+
+  void addChatID({required String newID}) {
+    userData.value.chatIDs ??= [];
+    userData.value.chatIDs?.add(newID);
+    _databaseController
+        .updateUserData(data: {'chat_ids': userData.value.chatIDs});
+  }
+
+  void synchronizeData() async {}
 }

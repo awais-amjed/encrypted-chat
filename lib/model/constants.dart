@@ -24,6 +24,7 @@ class K {
   }
 
   static showErrorToast(error) {
+    print(error);
     showToast(message: error.toString());
   }
 
