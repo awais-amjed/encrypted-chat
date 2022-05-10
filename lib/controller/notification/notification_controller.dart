@@ -43,6 +43,20 @@ class NotificationController extends GetxController {
     });
   }
 
+  void removeUser({required String userIDToRemove}) {
+    if (notificationsList.remove(userIDToRemove)) {
+      _databaseController.updateDocument(
+        collectionID: 'notifications',
+        documentID: userID,
+        data: {
+          'user_ids': notificationsList.value,
+        },
+      ).catchError((e) {
+        notificationsList.add(userIDToRemove);
+      });
+    }
+  }
+
   void startHandlingNotifications() async {
     Document? _document = await _databaseController.getDocument(
         collectionID: 'notifications', documentID: userID);

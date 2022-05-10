@@ -97,6 +97,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        _notificationController.removeUser(userIDToRemove: _you.id);
         _notificationController.currentChat = null;
         return true;
       },
