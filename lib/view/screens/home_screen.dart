@@ -1,8 +1,8 @@
-import 'package:ecat/controller/home/home_controller.dart';
+import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:ecat/model/helper_functions.dart';
 import 'package:ecat/view/screens/users_list.dart';
-import 'package:ecat/view/widgets/home_screen/chat_tile.dart';
+import 'package:ecat/view/widgets/home_screen/chat_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,8 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController _homeController =
-        Get.put(HomeController(), tag: K.homeControllerTag);
+    final UserController _userController = Get.find(tag: K.userControllerTag);
 
     return Stack(
       children: [
@@ -40,24 +39,17 @@ class HomeScreen extends StatelessWidget {
               Icons.message,
             ),
           ),
-          body: Column(
-            children: [
-              ChatTile(
-                userName: 'userName',
-                lastMessage: 'lastMessage',
-                dateTime: DateTime(2015, 9, 15),
-              ),
-              ChatTile(
-                userName: 'userName',
-                lastMessage: 'lastMessage',
-                dateTime: DateTime(2022, 1, 15),
-              ),
-              ChatTile(
-                userName: 'userName',
-                lastMessage: 'lastMessage',
-                dateTime: DateTime(2022, 5, 3, 19, 51),
-              ),
-            ],
+          body: Obx(
+            () => _userController.onGoingChats.isEmpty
+                ? const Center(
+                    child: Text('Click Message Icon to start a chat'),
+                  )
+                : ListView.builder(
+                    itemCount: _userController.onGoingChats.length,
+                    itemBuilder: (context, index) => ChatTileWidget(
+                      chatTile: _userController.onGoingChats.elementAt(index),
+                    ),
+                  ),
           ),
         ),
         const NotificationWidget(),

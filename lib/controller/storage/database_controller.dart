@@ -85,7 +85,7 @@ class DatabaseController extends GetxController {
     return document;
   }
 
-  Future updateUserData({
+  Future<Document> updateUserData({
     required Map<dynamic, dynamic> data,
   }) {
     return _database.updateDocument(

@@ -57,7 +57,7 @@ class NotificationController extends GetxController {
     }
   }
 
-  void startHandlingNotifications() async {
+  void startHandlingNotifications({required Function onListChange}) async {
     Document? _document = await _databaseController.getDocument(
         collectionID: 'notifications', documentID: userID);
     if (_document != null) {
@@ -65,6 +65,7 @@ class NotificationController extends GetxController {
         notificationsList.value = _document.data['user_ids']
             .map<String>((e) => e.toString())
             .toList();
+        onListChange(notificationsList.value);
       }
     }
 
@@ -81,6 +82,7 @@ class NotificationController extends GetxController {
           showNotification(name: user?.name);
         }
         notificationsList.value = newNotifications;
+        onListChange(notificationsList.value);
       }
     });
   }

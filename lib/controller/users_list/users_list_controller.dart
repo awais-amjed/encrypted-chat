@@ -13,13 +13,13 @@ class UsersListController extends GetxController {
   UsersListController({required this.currentUserID});
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    getUsers();
+    await getUsers();
   }
 
-  void getUsers() async {
+  Future<void> getUsers() async {
     allUsers.value = null;
     DocumentList? documentList = await _databaseController.getAllUsers();
     if (documentList == null) {
