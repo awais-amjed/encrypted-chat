@@ -128,7 +128,7 @@ class ChatController extends GetxController {
           if (myValue == null) {
             afterMagic(types.Status.error);
           } else {
-            afterMagic(types.Status.seen);
+            afterMagic(types.Status.sent);
 
             if (theirValue.length == 2) {
               theirPartitions = theirValue[1];
@@ -143,9 +143,12 @@ class ChatController extends GetxController {
             if (newMessage) {
               _databaseController
                   .notifyUser(user1: user1.id, user2: user2.id)
-                  .then((value) {
+                  .then((value) async {
                 newMessage = false;
+                afterMagic(types.Status.seen);
               }).catchError(K.showErrorToast);
+            } else {
+              afterMagic(types.Status.seen);
             }
           }
         });

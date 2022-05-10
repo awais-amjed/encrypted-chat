@@ -55,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _handleSendPressed(types.PartialText message) {
-    final textMessage = types.TextMessage(
+    types.TextMessage textMessage = types.TextMessage(
       author: _you,
       id: const Uuid().v4(),
       text: message.text,
@@ -70,7 +70,9 @@ class _ChatScreenState extends State<ChatScreen> {
           afterMagic: (status) {
             int index = _messages.indexOf(textMessage);
             setState(() {
-              _messages[index] = _messages[index].copyWith(status: status);
+              textMessage = _messages[index].copyWith(status: status)
+                  as types.TextMessage;
+              _messages[index] = textMessage;
             });
           },
         )
