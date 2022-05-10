@@ -37,6 +37,8 @@ class EncryptionController extends GetxController {
   }
 
   RSAKeypair generateNewKeys() {
-    return RSAKeypair.fromRandom();
+    RSAKeypair keyPair = RSAKeypair.fromRandom();
+    privateKey = keyPair.privateKey;
+    return keyPair;
   }
 }

@@ -14,6 +14,9 @@ class UserController extends GetxController {
 
   late DatabaseController _databaseController;
 
+  final LocalStorageController _localStorageController =
+      Get.find(tag: K.localStorageControllerTag);
+
   @override
   void onInit() async {
     super.onInit();
@@ -25,8 +28,6 @@ class UserController extends GetxController {
     );
 
     // Gets locally saved user data and updates it with new user data
-    LocalStorageController _localStorageController =
-        Get.find(tag: K.localStorageControllerTag);
     final CustomUser? _user = _localStorageController.getUser();
     bool isInitialized = false;
     if (_user != null) {
@@ -56,6 +57,15 @@ class UserController extends GetxController {
     userData.value.chatIDs?.add(newID);
     _databaseController
         .updateUserData(data: {'chat_ids': userData.value.chatIDs});
+  }
+
+  Future<void> updateUserFromRemote() async {
+    Document? remoteData =
+        await _databaseController.getUser(userID: currentSession.userId);
+    if (remoteData != null) {
+      userData.value = CustomUser.fromJson(remoteData.data);
+      _localStorageController.saveUser(user: userData.value);
+    }
   }
 
   void synchronizeData() async {}

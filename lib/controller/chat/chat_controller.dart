@@ -212,8 +212,11 @@ class ChatController extends GetxController {
   }
 
   types.TextMessage decryptMessage({required types.TextMessage message}) {
-    String? encrypted =
-        _encryptionController.decryptMessage(encryptedMessage: message.text);
+    String? encrypted;
+    try {
+      encrypted =
+          _encryptionController.decryptMessage(encryptedMessage: message.text);
+    } catch (e) {}
     if (encrypted != null) {
       return message.copyWith(text: encrypted) as types.TextMessage;
     }

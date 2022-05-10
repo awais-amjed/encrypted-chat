@@ -52,7 +52,7 @@ class AuthController extends GetxController {
       password: password,
     )
         .then((session) async {
-      Get.put(
+      final UserController _userController = Get.put(
         UserController(currentSession: session),
         tag: K.userControllerTag,
         permanent: true,
@@ -75,8 +75,10 @@ class AuthController extends GetxController {
             Get.find(tag: K.localStorageControllerTag);
         await _databaseController
             .updatePublicKey(publicKey: keypair.publicKey.toString())
-            .then((value) => null)
-            .catchError(
+            .then((value) async {
+          _userController.userData.value.publicKey =
+              keypair.publicKey.toString();
+        }).catchError(
           (e) {
             error = e.toString();
           },
