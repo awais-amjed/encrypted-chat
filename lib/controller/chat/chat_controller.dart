@@ -216,13 +216,13 @@ class ChatController extends GetxController {
   }
 
   types.TextMessage decryptMessage({required types.TextMessage message}) {
-    String? encrypted;
+    String? decrypted;
     try {
-      encrypted =
+      decrypted =
           _encryptionController.decryptMessage(encryptedMessage: message.text);
     } catch (e) {}
-    if (encrypted != null) {
-      return message.copyWith(text: encrypted) as types.TextMessage;
+    if (decrypted != null) {
+      return message.copyWith(text: decrypted) as types.TextMessage;
     }
     K.showToast(message: 'Unable to Decrypt message');
     return message;
@@ -247,7 +247,7 @@ class ChatController extends GetxController {
   Future<List<String>> getMessages(
       {required String collectionID, required String partition}) async {
     Document? document = await _databaseController.getDocument(
-        collectionID: readCollection, documentID: partition);
+        collectionID: collectionID, documentID: partition);
     if (document != null) {
       if (document.data[_dataKey] != null) {
         return document.data[_dataKey]
