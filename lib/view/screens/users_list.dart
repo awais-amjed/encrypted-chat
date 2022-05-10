@@ -12,6 +12,9 @@ class UsersList extends StatelessWidget {
   Widget build(BuildContext context) {
     final UsersListController _usersListController =
         Get.find(tag: K.usersListControllerTag);
+    if (_usersListController.allUsers.value == null) {
+      _usersListController.getUsers();
+    }
 
     return Scaffold(
       appBar: HelperFunctions.getAppBar(

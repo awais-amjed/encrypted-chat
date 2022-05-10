@@ -12,10 +12,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UsersListController _usersListController =
-        Get.put(UsersListController(), tag: K.usersListControllerTag);
+    Get.put(UsersListController(), tag: K.usersListControllerTag);
 
-    _usersListController.getUsers();
     return Scaffold(
       appBar: HelperFunctions.getAppBar(
         title: 'Encrypted Chat',
