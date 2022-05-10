@@ -1,4 +1,3 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:ecat/controller/notification/notification_controller.dart';
 import 'package:ecat/controller/storage/database_controller.dart';
@@ -18,11 +17,7 @@ class UserController extends GetxController {
   late DatabaseController _databaseController;
   final LocalStorageController _localStorageController =
       Get.find(tag: K.localStorageControllerTag);
-  final NotificationController _notificationController =
-      Get.put(NotificationController(), tag: K.notificationControllerTag);
-  late final UsersListController _usersListController;
-
-  final RxList<String> notificationsList = <String>[].obs;
+  late final NotificationController _notificationController;
 
   @override
   void onInit() async {
@@ -33,9 +28,15 @@ class UserController extends GetxController {
       tag: K.databaseControllerTag,
       permanent: true,
     );
-    _usersListController = Get.put(
+    Get.put(
       UsersListController(currentUserID: currentSession.userId),
       tag: K.usersListControllerTag,
+      permanent: true,
+    );
+
+    _notificationController = Get.put(
+      NotificationController(userID: currentSession.userId),
+      tag: K.notificationControllerTag,
       permanent: true,
     );
 
@@ -63,7 +64,7 @@ class UserController extends GetxController {
       }
     }
 
-    startHandlingNotifications();
+    _notificationController.startHandlingNotifications();
   }
 
   void addChatID({required String newID}) {
@@ -80,34 +81,6 @@ class UserController extends GetxController {
       userData.value = CustomUser.fromJson(remoteData.data);
       _localStorageController.saveUser(user: userData.value);
     }
-  }
-
-  void startHandlingNotifications() async {
-    Document? _document = await _databaseController.getDocument(
-        collectionID: 'notifications', documentID: currentSession.userId);
-    if (_document != null) {
-      if (_document.data['user_ids'] != null) {
-        notificationsList.value = _document.data['user_ids']
-            .map<String>((e) => e.toString())
-            .toList();
-      }
-    }
-
-    RealtimeSubscription _notificationSubscription =
-        _databaseController.subscribeToNotifications();
-    _notificationSubscription.stream.listen((event) {
-      if (event.event == 'database.documents.update') {
-        final List<String> newNotifications =
-            event.payload['user_ids'].map<String>((e) => e.toString()).toList();
-        if (newNotifications.length > notificationsList.length &&
-            _notificationController.currentChat != newNotifications.last) {
-          CustomUser? user = _usersListController.allUsers.value
-              ?.firstWhere((element) => element.id == newNotifications.last);
-          _notificationController.showNotification(name: user?.name);
-        }
-        notificationsList.value = newNotifications;
-      }
-    });
   }
 
   void synchronizeData() async {}

@@ -1,6 +1,5 @@
 import 'package:dismiss_keyboard_on_tap/dismiss_keyboard_on_tap.dart';
 import 'package:ecat/controller/app_write_controller.dart';
-import 'package:ecat/controller/notification/notification_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:ecat/view/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +16,6 @@ void main() async {
     tag: K.appWriteControllerTag,
     permanent: true,
   );
-
-  Get.put(NotificationController(), tag: K.notificationControllerTag);
 
   runApp(const ECat());
 }
