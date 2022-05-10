@@ -54,7 +54,7 @@ class K {
         );
       },
       animationType: DialogTransitionType.scale,
-      duration: const Duration(seconds: 300),
+      duration: const Duration(milliseconds: 300),
     );
   }
 }

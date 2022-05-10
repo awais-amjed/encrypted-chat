@@ -91,6 +91,14 @@ class _ChatScreenState extends State<ChatScreen> {
         user: _you,
         onSendPressed: _handleSendPressed,
         messages: _messages,
+        onTextChanged: (_) {
+          if (_.length > 240) {
+            K.showDialog(
+              context: context,
+              title: 'Max Length reached',
+            );
+          }
+        },
       ),
     );
   }

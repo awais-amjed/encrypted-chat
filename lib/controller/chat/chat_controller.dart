@@ -86,9 +86,16 @@ class ChatController extends GetxController {
     required types.TextMessage message,
     required Function afterMagic,
   }) async {
-    final types.TextMessage theirMessage = encryptMessage(message: message);
-    final types.TextMessage myMessage =
-        encryptMessage(message: message, mine: true);
+    final types.TextMessage theirMessage;
+    final types.TextMessage myMessage;
+    try {
+      theirMessage = encryptMessage(message: message);
+      myMessage = encryptMessage(message: message, mine: true);
+    } catch (e) {
+      K.showErrorToast(e);
+      afterMagic(types.Status.error);
+      return;
+    }
 
     if (!collectionExists) {
       Execution? _execution = await _databaseController.createMessageCollection(
