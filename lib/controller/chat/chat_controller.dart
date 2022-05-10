@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:crypton/crypton.dart';
 import 'package:ecat/controller/encryption/encryption_controller.dart';
@@ -31,6 +32,9 @@ class ChatController extends GetxController {
   List<String> myPartitions = [];
   List<String> theirPartitions = [];
 
+  late final RealtimeSubscription mySubscription;
+  late final RealtimeSubscription theirSubscription;
+
   bool collectionExists = false;
 
   ChatController({
@@ -39,7 +43,7 @@ class ChatController extends GetxController {
     required this.setMessages,
   });
 
-  final UserController _userController = Get.find(tag: K.userControllerTag);
+  final UserController userController = Get.find(tag: K.userControllerTag);
   final DatabaseController _databaseController =
       Get.find(tag: K.databaseControllerTag);
   final EncryptionController _encryptionController =
@@ -51,7 +55,7 @@ class ChatController extends GetxController {
 
     theirPublicKey = RSAPublicKey.fromString(user2.publicKey!);
     myPublicKey =
-        RSAPublicKey.fromString(_userController.userData.value.publicKey!);
+        RSAPublicKey.fromString(userController.userData.value.publicKey!);
 
     readCollection = getCollectionID();
     writeCollection = getCollectionID(reverse: true);
@@ -79,6 +83,17 @@ class ChatController extends GetxController {
             collectionID: writeCollection, partition: theirPartitions.last);
       }
     }
+
+    mySubscription =
+        _databaseController.subscribeToChat(collectionID: readCollection);
+    theirSubscription =
+        _databaseController.subscribeToChat(collectionID: writeCollection);
+
+    mySubscription.stream.listen((event) {
+      if (event.event == 'database.documents.update') {
+        print(event.payload['id']);
+      }
+    });
   }
 
   Future<void> addMessage({
@@ -106,7 +121,7 @@ class ChatController extends GetxController {
       myPartitions.add('1');
       theirPartitions.add('1');
       collectionExists = true;
-      _userController.addChatID(newID: user2.id);
+      userController.addChatID(newID: user2.id);
     }
 
     await addMessageHelper(
@@ -192,7 +207,7 @@ class ChatController extends GetxController {
   }
 
   bool collectionFound({required String userID}) {
-    final List<String>? chatIDs = _userController.userData.value.chatIDs;
+    final List<String>? chatIDs = userController.userData.value.chatIDs;
     if (chatIDs == null || !chatIDs.contains(userID)) {
       return false;
     }
@@ -257,5 +272,16 @@ class ChatController extends GetxController {
     }
 
     return [];
+  }
+
+  void messageReceived() {}
+
+  @override
+  void dispose() {
+    try {
+      theirSubscription.stream.listen((event) {});
+      mySubscription.stream.listen((event) {});
+    } catch (e) {}
+    super.dispose();
   }
 }

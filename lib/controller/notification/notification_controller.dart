@@ -3,6 +3,7 @@ import 'package:appwrite/models.dart';
 import 'package:ecat/controller/storage/database_controller.dart';
 import 'package:ecat/controller/users_list/users_list_controller.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../model/classes/custom_user.dart';
@@ -43,7 +44,8 @@ class NotificationController extends GetxController {
     });
   }
 
-  void removeUser({required String userIDToRemove}) {
+  void removeUser(
+      {required String userIDToRemove, required Function callback}) {
     if (notificationsList.remove(userIDToRemove)) {
       _databaseController.updateDocument(
         collectionID: 'notifications',
@@ -51,8 +53,12 @@ class NotificationController extends GetxController {
         data: {
           'user_ids': notificationsList.value,
         },
-      ).catchError((e) {
-        notificationsList.add(userIDToRemove);
+      ).then((value) {
+        if (value == null) {
+          notificationsList.add(userIDToRemove);
+        } else {
+          callback(userID: userIDToRemove);
+        }
       });
     }
   }
@@ -65,7 +71,8 @@ class NotificationController extends GetxController {
         notificationsList.value = _document.data['user_ids']
             .map<String>((e) => e.toString())
             .toList();
-        onListChange(notificationsList.value);
+
+        onListChange(notifications: notificationsList.value);
       }
     }
 
@@ -82,7 +89,7 @@ class NotificationController extends GetxController {
           showNotification(name: user?.name);
         }
         notificationsList.value = newNotifications;
-        onListChange(notificationsList.value);
+        onListChange(notifications: notificationsList.value);
       }
     });
   }

@@ -76,7 +76,18 @@ class UserController extends GetxController {
         onListChange: updateChatsStatus);
   }
 
-  void updateChatsStatus(List<String> ids) {
+  void chatStatusRead({required String userID}) {
+    onGoingChats
+        .firstWhereOrNull((element) => element.user.id == userID)
+        ?.messageStatus
+        .value = MessageStatus.read;
+  }
+
+  void updateChatsStatus({required List<String> notifications}) {
+    List<String> ids = [];
+    for (String element in notifications) {
+      ids.add(element);
+    }
     for (ChatTile chatTile in onGoingChats) {
       if (ids.remove(chatTile.user.id)) {
         chatTile.messageStatus.value = MessageStatus.unRead;
@@ -86,10 +97,12 @@ class UserController extends GetxController {
       CustomUser? _user = _usersListController.allUsers.value
           ?.firstWhereOrNull((element) => element.id == newID);
       if (_user != null) {
-        onGoingChats.add(ChatTile(
-          user: _user,
-          messageStatus: MessageStatus.newUser.obs,
-        ));
+        onGoingChats.add(
+          ChatTile(
+            user: _user,
+            messageStatus: MessageStatus.newUser.obs,
+          ),
+        );
       }
     }
   }
@@ -131,6 +144,4 @@ class UserController extends GetxController {
       _localStorageController.saveUser(user: userData.value);
     }
   }
-
-  void synchronizeData() async {}
 }

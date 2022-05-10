@@ -174,4 +174,8 @@ class DatabaseController extends GetxController {
     return _realtime
         .subscribe(['collections.notifications.documents.${session.userId}']);
   }
+
+  RealtimeSubscription subscribeToChat({required String collectionID}) {
+    return _realtime.subscribe(['collections.$collectionID.documents']);
+  }
 }
