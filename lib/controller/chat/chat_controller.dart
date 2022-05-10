@@ -76,9 +76,8 @@ class ChatController extends GetxController {
             collectionID: readCollection, partition: myPartitions.last);
         setUIMessages(decryptMessages(
             messages: myMessages
-                .map<types.TextMessage>((e) =>
-                    types.TextMessage.fromJson(jsonDecode(e)).copyWith(
-                        status: types.Status.seen) as types.TextMessage)
+                .map<types.TextMessage>(
+                    (e) => types.TextMessage.fromJson(jsonDecode(e)))
                 .toList()));
       }
       if (theirPartitions.isNotEmpty) {
@@ -99,11 +98,14 @@ class ChatController extends GetxController {
         if (data[0] == '1') {
           myPartitions = data;
         } else {
-          myMessages = data;
-          addMessageToUI(decryptMessage(
-              message: types.TextMessage.fromJson(
-            jsonDecode(myMessages.last),
-          )));
+          if (myMessages.length < data.length) {
+            myMessages = data;
+
+            addMessageToUI(decryptMessage(
+                message: types.TextMessage.fromJson(
+              jsonDecode(myMessages.last),
+            )));
+          }
         }
       }
     });
@@ -128,8 +130,13 @@ class ChatController extends GetxController {
     final types.TextMessage theirMessage;
     final types.TextMessage myMessage;
     try {
-      theirMessage = encryptMessage(message: message);
-      myMessage = encryptMessage(message: message, mine: true);
+      theirMessage = encryptMessage(
+          message:
+              message.copyWith(status: types.Status.sent) as types.TextMessage);
+      myMessage = encryptMessage(
+          message:
+              message.copyWith(status: types.Status.sent) as types.TextMessage,
+          mine: true);
     } catch (e) {
       K.showErrorToast(e);
       afterMagic(types.Status.error);
@@ -181,9 +188,8 @@ class ChatController extends GetxController {
 
             _databaseController
                 .notifyUser(user1: user1.id, user2: user2.id)
-                .then((value) async {
-              afterMagic(types.Status.seen);
-            }).catchError(K.showErrorToast);
+                .then((value) async {})
+                .catchError(K.showErrorToast);
           }
         });
       }
