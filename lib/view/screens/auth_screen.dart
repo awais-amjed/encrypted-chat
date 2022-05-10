@@ -36,7 +36,7 @@ class AuthScreen extends StatelessWidget {
         },
         loginAfterSignUp: false,
         onSubmitAnimationCompleted: () {
-          Get.to(() => HomeScreen());
+          Get.off(() => const HomeScreen());
         },
         messages: LoginMessages(
           additionalSignUpFormDescription: 'Please Enter your name',

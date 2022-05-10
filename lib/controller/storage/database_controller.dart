@@ -5,9 +5,10 @@ import 'package:ecat/model/constants.dart';
 import 'package:get/get.dart';
 
 class DatabaseController extends GetxController {
-  late Database database;
+  late Database _database;
   final Session session;
-  late Functions functions;
+  late Functions _functions;
+  late Realtime _realtime;
 
   // keys
   final String _usersCollectionKey = 'users'; // this is also used during auth
@@ -22,13 +23,16 @@ class DatabaseController extends GetxController {
     super.onInit();
 
     AppWriteController _ = Get.find(tag: K.appWriteControllerTag);
-    database = _.database;
-    functions = Functions(_.client);
+    _database = _.database;
+    _functions = Functions(_.client);
+    _realtime = Realtime(_.client);
+
+    subscribeToNotifications();
   }
 
   Future<bool?> isPublicKeyAvailable() async {
     bool? result;
-    await database
+    await _database
         .getDocument(
       collectionId: _usersCollectionKey,
       documentId: session.userId,
@@ -47,7 +51,7 @@ class DatabaseController extends GetxController {
   Future updatePublicKey({
     required String publicKey,
   }) {
-    return database.updateDocument(
+    return _database.updateDocument(
       collectionId: _usersCollectionKey,
       documentId: session.userId,
       data: {
@@ -58,7 +62,7 @@ class DatabaseController extends GetxController {
 
   Future<DocumentList?> getAllUsers() async {
     DocumentList? documents;
-    await database.listDocuments(
+    await _database.listDocuments(
       collectionId: _usersCollectionKey,
       orderAttributes: ['name'],
       orderTypes: ['ASC'],
@@ -70,7 +74,7 @@ class DatabaseController extends GetxController {
 
   Future<Document?> getUser({required String userID}) async {
     Document? document;
-    await database
+    await _database
         .getDocument(
       collectionId: _usersCollectionKey,
       documentId: userID,
@@ -84,7 +88,7 @@ class DatabaseController extends GetxController {
   Future updateUserData({
     required Map<dynamic, dynamic> data,
   }) {
-    return database.updateDocument(
+    return _database.updateDocument(
       collectionId: _usersCollectionKey,
       documentId: session.userId,
       data: data,
@@ -94,7 +98,7 @@ class DatabaseController extends GetxController {
   Future<Execution?> createMessageCollection(
       {required String user1, required String user2}) async {
     Execution? execution;
-    await functions
+    await _functions
         .createExecution(
       functionId: _createMessageCollectionFunctionKey,
       data: '$user1-$user2'.toString(),
@@ -111,7 +115,7 @@ class DatabaseController extends GetxController {
     required String documentID,
   }) async {
     Document? document;
-    await database
+    await _database
         .getDocument(
       collectionId: collectionID,
       documentId: documentID,
@@ -128,7 +132,7 @@ class DatabaseController extends GetxController {
     required Map<dynamic, dynamic> data,
   }) async {
     Document? document;
-    await database
+    await _database
         .createDocument(
       collectionId: collectionID,
       documentId: documentID,
@@ -146,7 +150,7 @@ class DatabaseController extends GetxController {
     required Map<dynamic, dynamic> data,
   }) async {
     Document? document;
-    await database
+    await _database
         .updateDocument(
       collectionId: collectionID,
       documentId: documentID,
@@ -159,10 +163,15 @@ class DatabaseController extends GetxController {
   }
 
   Future notifyUser({required String user1, required String user2}) async {
-    functions.createExecution(
+    _functions.createExecution(
       functionId: _notifyUserFunctionKey,
       data: '$user1-$user2'.toString(),
       xasync: false,
     );
+  }
+
+  RealtimeSubscription subscribeToNotifications() {
+    return _realtime
+        .subscribe(['collections.notifications.documents.${session.userId}']);
   }
 }

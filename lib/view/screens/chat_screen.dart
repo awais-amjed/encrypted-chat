@@ -1,7 +1,9 @@
 import 'package:ecat/controller/chat/chat_controller.dart';
+import 'package:ecat/controller/notification/notification_controller.dart';
 import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/classes/custom_user.dart';
 import 'package:ecat/model/constants.dart';
+import 'package:ecat/view/widgets/general/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
@@ -24,9 +26,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
   late ChatController _chatController;
 
+  final NotificationController _notificationController =
+      Get.find(tag: K.notificationControllerTag);
+
   @override
   void initState() {
     super.initState();
+
+    _notificationController.currentChat = widget.selectedUser.id;
 
     _you = types.User(
       id: widget.selectedUser.id,
@@ -88,19 +95,30 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Chat(
-        user: _you,
-        onSendPressed: _handleSendPressed,
-        messages: _messages,
-        onTextChanged: (_) {
-          if (_.length > 240) {
-            K.showDialog(
-              context: context,
-              title: 'Max Length reached',
-            );
-          }
-        },
+    return WillPopScope(
+      onWillPop: () async {
+        _notificationController.currentChat = null;
+        return true;
+      },
+      child: Stack(
+        children: [
+          Scaffold(
+            body: Chat(
+              user: _you,
+              onSendPressed: _handleSendPressed,
+              messages: _messages,
+              onTextChanged: (_) {
+                if (_.length > 240) {
+                  K.showDialog(
+                    context: context,
+                    title: 'Max Length reached',
+                  );
+                }
+              },
+            ),
+          ),
+          const NotificationWidget(),
+        ],
       ),
     );
   }

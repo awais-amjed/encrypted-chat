@@ -13,6 +13,8 @@ class K {
   static const String databaseControllerTag = 'databaseControllerTag';
   static const String encryptionControllerTag = 'encryptionControllerTag';
   static const String usersListControllerTag = 'usersListControllerTag';
+  static const String homeControllerTag = 'homeControllerTag';
+  static const String notificationControllerTag = 'notificationControllerTag';
 
   // Functions
   static void showToast({required String message, Toast? toastLength}) {

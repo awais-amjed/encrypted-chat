@@ -32,7 +32,6 @@ class ChatController extends GetxController {
   List<String> theirPartitions = [];
 
   bool collectionExists = false;
-  bool newMessage = true;
 
   ChatController({
     required this.user1,
@@ -140,16 +139,11 @@ class ChatController extends GetxController {
             }
             myMessages = myValue[0];
 
-            if (newMessage) {
-              _databaseController
-                  .notifyUser(user1: user1.id, user2: user2.id)
-                  .then((value) async {
-                newMessage = false;
-                afterMagic(types.Status.seen);
-              }).catchError(K.showErrorToast);
-            } else {
+            _databaseController
+                .notifyUser(user1: user1.id, user2: user2.id)
+                .then((value) async {
               afterMagic(types.Status.seen);
-            }
+            }).catchError(K.showErrorToast);
           }
         });
       }
