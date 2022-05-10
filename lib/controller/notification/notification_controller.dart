@@ -46,8 +46,8 @@ class NotificationController extends GetxController {
     });
   }
 
-  void removeUser(
-      {required String userIDToRemove, required Function callback}) {
+  Future<void> removeUser(
+      {required String userIDToRemove, required Function callback}) async {
     if (notificationsList.remove(userIDToRemove)) {
       _databaseController.updateDocument(
         collectionID: 'notifications',

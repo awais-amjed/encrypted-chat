@@ -98,12 +98,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _chatController.mySubscription.close();
-        _chatController.theirSubscription.close();
-        _notificationController.removeUser(
-            userIDToRemove: _you.id,
-            callback: _chatController.userController.chatStatusRead);
-        _notificationController.currentChat = null;
+        destroy();
         return true;
       },
       child: Stack(
@@ -127,5 +122,14 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> destroy() async {
+    _chatController.mySubscription.close();
+    _chatController.theirSubscription.close();
+    _notificationController.removeUser(
+        userIDToRemove: _you.id,
+        callback: _chatController.userController.chatStatusRead);
+    _notificationController.currentChat = null;
   }
 }
