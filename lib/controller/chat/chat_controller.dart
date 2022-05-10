@@ -56,7 +56,7 @@ class ChatController extends GetxController {
     readCollection = getCollectionID();
     writeCollection = getCollectionID(reverse: true);
 
-    if (collectionFound(collectionID: readCollection)) {
+    if (collectionFound(userID: user2.id)) {
       collectionExists = true;
     }
 
@@ -106,7 +106,7 @@ class ChatController extends GetxController {
       myPartitions.add('1');
       theirPartitions.add('1');
       collectionExists = true;
-      _userController.addChatID(newID: readCollection);
+      _userController.addChatID(newID: user2.id);
     }
 
     await addMessageHelper(
@@ -191,9 +191,9 @@ class ChatController extends GetxController {
     return [messages];
   }
 
-  bool collectionFound({required String collectionID}) {
+  bool collectionFound({required String userID}) {
     final List<String>? chatIDs = _userController.userData.value.chatIDs;
-    if (chatIDs == null || !chatIDs.contains(collectionID)) {
+    if (chatIDs == null || !chatIDs.contains(userID)) {
       return false;
     }
     return true;
