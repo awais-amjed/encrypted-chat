@@ -39,7 +39,9 @@ class NotificationController extends GetxController {
     AnimationController? _controller = animationControllers[route];
     _controller?.forward().then((value) {
       Future.delayed(const Duration(seconds: 2), () {
-        _controller.reverse();
+        try {
+          _controller.reverse();
+        } catch (e) {}
       });
     });
   }

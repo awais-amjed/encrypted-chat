@@ -32,14 +32,19 @@ class ChatTileWidget extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ClipOval(
-                  child: CustomNetworkImage(
-                    url: chatTile.user.imageURL,
-                    fit: BoxFit.cover,
-                    height: 65,
-                    width: 65,
+              GestureDetector(
+                onTap: (){
+                  print('nice');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ClipOval(
+                    child: CustomNetworkImage(
+                      url: chatTile.user.imageURL,
+                      fit: BoxFit.cover,
+                      height: 65,
+                      width: 65,
+                    ),
                   ),
                 ),
               ),
