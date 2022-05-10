@@ -18,7 +18,9 @@ class ChatController extends GetxController {
 
   final CustomUser user1;
   final CustomUser user2;
-  final Function setMessages;
+
+  final Function setUIMessages;
+  final Function addMessageToUI;
 
   late final RSAPublicKey theirPublicKey;
   late final RSAPublicKey myPublicKey;
@@ -40,7 +42,8 @@ class ChatController extends GetxController {
   ChatController({
     required this.user1,
     required this.user2,
-    required this.setMessages,
+    required this.setUIMessages,
+    required this.addMessageToUI,
   });
 
   final UserController userController = Get.find(tag: K.userControllerTag);
@@ -71,7 +74,7 @@ class ChatController extends GetxController {
       if (myPartitions.isNotEmpty) {
         myMessages = await getMessages(
             collectionID: readCollection, partition: myPartitions.last);
-        setMessages(decryptMessages(
+        setUIMessages(decryptMessages(
             messages: myMessages
                 .map<types.TextMessage>((e) =>
                     types.TextMessage.fromJson(jsonDecode(e)).copyWith(
@@ -91,7 +94,29 @@ class ChatController extends GetxController {
 
     mySubscription.stream.listen((event) {
       if (event.event == 'database.documents.update') {
-        print(event.payload['id']);
+        final List<String> data =
+            event.payload['data'].map<String>((e) => e.toString()).toList();
+        if (data[0] == '1') {
+          myPartitions = data;
+        } else {
+          myMessages = data;
+          addMessageToUI(decryptMessage(
+              message: types.TextMessage.fromJson(
+            jsonDecode(myMessages.last),
+          )));
+        }
+      }
+    });
+
+    theirSubscription.stream.listen((event) {
+      if (event.event == 'database.documents.update') {
+        final List<String> data =
+            event.payload['data'].map<String>((e) => e.toString()).toList();
+        if (data[0] == '1') {
+          theirPartitions = data;
+        } else {
+          theirMessages = data;
+        }
       }
     });
   }

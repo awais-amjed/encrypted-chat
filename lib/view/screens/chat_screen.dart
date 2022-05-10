@@ -51,7 +51,8 @@ class _ChatScreenState extends State<ChatScreen> {
     _chatController = Get.put(ChatController(
       user1: _userController.userData.value,
       user2: widget.selectedUser,
-      setMessages: _setMessages,
+      setUIMessages: _setMessages,
+      addMessageToUI: _addMessage,
     ));
   }
 
