@@ -6,6 +6,7 @@ class HelperFunctions {
     required String title,
     Widget? leading,
     List<Widget>? actions,
+    double? leadingWidth,
   }) {
     return AppBar(
       centerTitle: true,
@@ -13,10 +14,10 @@ class HelperFunctions {
         title,
       ),
       toolbarHeight: 80,
-      // backgroundColor: Colors.transparent,
-      elevation: 0,
+      elevation: 2,
       actions: actions,
       leading: leading,
+      leadingWidth: leadingWidth,
     );
   }
 

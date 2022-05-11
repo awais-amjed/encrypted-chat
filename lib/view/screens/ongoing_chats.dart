@@ -1,5 +1,6 @@
 import 'package:ecat/controller/home/home_controller.dart';
 import 'package:ecat/view/screens/users_list.dart';
+import 'package:ecat/view/widgets/general/avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,8 +29,12 @@ class OngoingChats extends GetView<HomeController> {
           onPressed: () {
             controller.toggleDrawer();
           },
-          icon: const Icon(Icons.settings),
+          icon: AvatarWidget(
+            size: 40,
+            image: _userController.userData.value.imageURL,
+          ),
         ),
+        leadingWidth: 80,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

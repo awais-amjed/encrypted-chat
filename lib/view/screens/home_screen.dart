@@ -36,6 +36,7 @@ class HomeScreen extends GetView<HomeController> {
                   ? K.darkPrimary
                   : K.lightPrimary,
               androidCloseOnBackTap: true,
+              mainScreenTapClose: true,
             ),
           ),
           const NotificationWidget(),
