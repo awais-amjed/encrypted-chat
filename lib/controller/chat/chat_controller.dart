@@ -14,13 +14,14 @@ import 'package:get/get.dart';
 class ChatController extends GetxController {
   final String _partitionsKey = 'partitions';
   final String _dataKey = 'data';
-  final int _maxMessagesPerPartition = 500;
+  final int _maxMessagesPerPartition = 50;
 
   final CustomUser user1;
   final CustomUser user2;
 
   final Function setUIMessages;
   final Function addMessageToUI;
+  final Function addMessagesAtEnd;
 
   late final RSAPublicKey theirPublicKey;
   late final RSAPublicKey myPublicKey;
@@ -39,11 +40,15 @@ class ChatController extends GetxController {
 
   bool collectionExists = false;
 
+  bool loadingMoreData = false;
+  String? cursor;
+
   ChatController({
     required this.user1,
     required this.user2,
     required this.setUIMessages,
     required this.addMessageToUI,
+    required this.addMessagesAtEnd,
   });
 
   final UserController userController = Get.find(tag: K.userControllerTag);
@@ -69,6 +74,7 @@ class ChatController extends GetxController {
 
     if (collectionExists) {
       myPartitions = await getPartitions(collectionID: readCollection);
+      cursor = myPartitions.last;
       theirPartitions = await getPartitions(collectionID: writeCollection);
 
       if (myPartitions.isNotEmpty) {
@@ -79,6 +85,9 @@ class ChatController extends GetxController {
                 .map<types.TextMessage>(
                     (e) => types.TextMessage.fromJson(jsonDecode(e)))
                 .toList()));
+        if (myMessages.length < 10) {
+          loadMoreMessages();
+        }
       }
       if (theirPartitions.isNotEmpty) {
         theirMessages = await getMessages(
@@ -305,7 +314,35 @@ class ChatController extends GetxController {
     return [];
   }
 
-  void messageReceived() {}
+  int getPreviousCursor() {
+    if (cursor != null) {
+      return int.parse(cursor!) - 1;
+    }
+    return 0;
+  }
+
+  void loadMoreMessages() async {
+    print(cursor);
+    if (loadingMoreData) {
+      return;
+    }
+    if (cursor == '1') {
+      return;
+    }
+    loadingMoreData = true;
+    int previous = getPreviousCursor();
+    if (previous > 0) {
+      final List<String> newMessages = await getMessages(
+          collectionID: readCollection, partition: previous.toString());
+      addMessagesAtEnd(decryptMessages(
+          messages: newMessages.reversed
+              .map<types.TextMessage>(
+                  (e) => types.TextMessage.fromJson(jsonDecode(e)))
+              .toList()));
+      cursor = previous.toString();
+    }
+    loadingMoreData = false;
+  }
 
   @override
   void dispose() {

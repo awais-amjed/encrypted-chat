@@ -16,7 +16,8 @@ class UserListTile extends StatelessWidget {
       onTap: () {
         Get.off(() => ChatScreen(selectedUser: user));
       },
-      child: Padding(
+      child: Container(
+        color: Colors.transparent,
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4.w),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

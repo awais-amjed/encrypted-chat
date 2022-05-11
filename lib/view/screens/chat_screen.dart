@@ -56,6 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
       user2: widget.selectedUser,
       setUIMessages: _setMessages,
       addMessageToUI: _addMessage,
+      addMessagesAtEnd: _addMessagesAtEnd,
     ));
   }
 
@@ -65,9 +66,15 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  void _addMessagesAtEnd(List<types.TextMessage> messages) {
+    setState(() {
+      _messages.addAll(messages);
+    });
+  }
+
   void _handleSendPressed(types.PartialText message) {
     types.TextMessage textMessage = types.TextMessage(
-      author: _you,
+      author: _me,
       id: const Uuid().v4(),
       text: message.text,
       showStatus: true,
@@ -109,9 +116,13 @@ class _ChatScreenState extends State<ChatScreen> {
           Scaffold(
             appBar: HelperFunctions.getAppBar(title: widget.selectedUser.name),
             body: Chat(
-              user: _you,
+              user: _me,
               onSendPressed: _handleSendPressed,
               messages: _messages,
+              onEndReachedThreshold: 1,
+              onEndReached: () async {
+                _chatController.loadMoreMessages();
+              },
               onTextChanged: (_) {
                 if (_.length > 240) {
                   K.showDialog(
