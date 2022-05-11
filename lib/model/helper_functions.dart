@@ -11,18 +11,11 @@ class HelperFunctions {
       centerTitle: true,
       title: Text(
         title,
-        style: const TextStyle(color: Colors.black),
       ),
       toolbarHeight: 80,
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       elevation: 0,
       actions: actions,
-      iconTheme: const IconThemeData(
-        color: Colors.black,
-      ),
-      actionsIconTheme: const IconThemeData(
-        color: Colors.black,
-      ),
       leading: leading,
     );
   }

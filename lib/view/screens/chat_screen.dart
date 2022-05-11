@@ -1,8 +1,10 @@
 import 'package:ecat/controller/chat/chat_controller.dart';
 import 'package:ecat/controller/notification/notification_controller.dart';
+import 'package:ecat/controller/theme_controller.dart';
 import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/classes/custom_user.dart';
 import 'package:ecat/model/constants.dart';
+import 'package:ecat/model/helper_functions.dart';
 import 'package:ecat/view/widgets/general/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -28,6 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final NotificationController _notificationController =
       Get.find(tag: K.notificationControllerTag);
+  final ThemeController _themeController = Get.find(tag: K.themeControllerTag);
 
   @override
   void initState() {
@@ -104,6 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Stack(
         children: [
           Scaffold(
+            appBar: HelperFunctions.getAppBar(title: widget.selectedUser.name),
             body: Chat(
               user: _you,
               onSendPressed: _handleSendPressed,
@@ -116,6 +120,21 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 }
               },
+              theme: _themeController.isDarkMode.value
+                  ? const DarkChatTheme(
+                      backgroundColor: K.darkPrimary,
+                      inputBackgroundColor: K.darkAppbar,
+                      messageBorderRadius: 12,
+                    )
+                  : const DefaultChatTheme(
+                      backgroundColor: K.lightPrimary,
+                      inputBackgroundColor: K.lightSecondary,
+                      secondaryColor: K.darkSecondary,
+                      primaryColor: K.lightSecondary,
+                      inputTextCursorColor: Colors.white,
+                      inputTextColor: Colors.white,
+                      messageBorderRadius: 12,
+                    ),
             ),
           ),
           const NotificationWidget(),

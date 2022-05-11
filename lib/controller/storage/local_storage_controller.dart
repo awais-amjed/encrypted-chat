@@ -9,6 +9,7 @@ class LocalStorageController extends GetxController {
 
   final String _privateKeyHolder = 'privateKey';
   final String _userHolder = 'user';
+  final String _themeHolder = 'theme';
 
   String? readPrivateKey() {
     return localStorage.read(_privateKeyHolder);
@@ -39,5 +40,13 @@ class LocalStorageController extends GetxController {
     required List<types.TextMessage> data,
   }) async {
     await messageStorage.write(collectionID, data);
+  }
+
+  bool? getSavedTheme() {
+    return localStorage.read(_themeHolder);
+  }
+
+  void saveTheme({required bool theme}) {
+    localStorage.write(_themeHolder, theme);
   }
 }

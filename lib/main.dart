@@ -18,12 +18,6 @@ void main() async {
     permanent: true,
   );
 
-  Get.put(
-    ThemeController(),
-    tag: K.themeControllerTag,
-    permanent: true,
-  );
-
   runApp(const ECat());
 }
 
@@ -32,26 +26,80 @@ class ECat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeController _themeController = Get.put(
+      ThemeController(),
+      tag: K.themeControllerTag,
+      permanent: true,
+    );
+
     return Sizer(builder: (context, orientation, deviceType) {
       return DismissKeyboardOnTap(
         child: GetMaterialApp(
-          // theme: ThemeData(
-          //   brightness: Brightness.light,
-          //   primaryColor: K.lightSecondary,
-          //   colorScheme: const ColorScheme.light(
-          //     primary: K.lightSecondary,
-          //     secondary: K.lightSecondary,
-          //     background: K.lightPrimary,
-          //     tertiary: K.lightSecondary,
-          //   ),
-          //   buttonTheme: const ButtonThemeData(
-          //     colorScheme: ColorScheme.light(
-          //       primary: K.lightSecondary,
-          //       secondary: K.lightSecondary,
-          //     ),
-          //     buttonColor: K.lightSecondary,
-          //   ),
-          // ),
+          theme: ThemeData(
+            splashColor: Colors.white12,
+            scaffoldBackgroundColor: K.whiteText,
+            listTileTheme: const ListTileThemeData(
+              iconColor: K.blackText,
+            ),
+            colorScheme: const ColorScheme.light(
+              primary: K.lightSecondary,
+              secondary: K.lightSecondary,
+              tertiary: K.lightPrimary,
+              onSecondary: K.lightPrimary,
+            ),
+            inputDecorationTheme: const InputDecorationTheme(
+              prefixIconColor: Colors.black,
+              suffixIconColor: Colors.black,
+              labelStyle: TextStyle(color: Colors.black),
+              floatingLabelStyle: TextStyle(color: Colors.black),
+            ),
+            textTheme: const TextTheme(
+              headline1: TextStyle(color: K.whiteText),
+              headline6: TextStyle(color: K.whiteText),
+              bodyText2: TextStyle(color: K.blackText), // text
+            ),
+            buttonTheme: const ButtonThemeData(
+              colorScheme: ColorScheme.light(
+                primary: K.lightSecondary,
+                secondary: K.lightSecondary,
+              ),
+              buttonColor: K.lightSecondary,
+            ),
+          ),
+          darkTheme: ThemeData(
+            splashColor: Colors.white12,
+            scaffoldBackgroundColor: K.darkPrimary,
+            listTileTheme: const ListTileThemeData(
+              iconColor: K.whiteText,
+            ),
+            inputDecorationTheme: const InputDecorationTheme(
+              prefixIconColor: Colors.black,
+              suffixIconColor: Colors.black,
+            ),
+            appBarTheme: const AppBarTheme(
+              color: K.darkAppbar,
+            ),
+            colorScheme: const ColorScheme.dark(
+              primary: K.darkSecondary,
+              secondary: K.darkSecondary,
+              tertiary: K.darkPrimary,
+              onSecondary: K.darkPrimary,
+              onPrimary: K.darkPrimary,
+            ),
+            textTheme: const TextTheme(
+              headline1: TextStyle(color: K.whiteText),
+              headline6: TextStyle(color: K.whiteText),
+              bodyText2: TextStyle(color: K.whiteText), // text
+            ),
+            buttonTheme: const ButtonThemeData(
+              colorScheme: ColorScheme.dark(
+                background: K.darkPrimary,
+              ),
+            ),
+          ),
+          themeMode: _themeController.isDarkMode.value
+              ? ThemeMode.dark
+              : ThemeMode.light,
           home: const AuthScreen(),
         ),
       );

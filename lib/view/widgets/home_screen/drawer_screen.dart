@@ -14,7 +14,6 @@ class DrawerScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final UserController _userController = Get.find(tag: K.userControllerTag);
-    RxBool toggle = false.obs;
 
     return Scaffold(
       body: SafeArea(
@@ -30,7 +29,6 @@ class DrawerScreen extends GetView<HomeController> {
                 () => Text(
                   _userController.userData.value.name,
                   style: const TextStyle(
-                    color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -69,7 +67,6 @@ class DrawerScreen extends GetView<HomeController> {
           ),
         ),
       ),
-      backgroundColor: Colors.white,
     );
   }
 }
@@ -87,7 +84,6 @@ class _HelperListTile extends StatelessWidget {
       leading: Icon(
         icon,
         size: 30,
-        color: Colors.black,
       ),
       minLeadingWidth: 20,
       contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),

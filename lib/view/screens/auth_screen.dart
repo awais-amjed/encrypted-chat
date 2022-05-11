@@ -58,6 +58,8 @@ class AuthScreen extends StatelessWidget {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
+                  labelStyle: const TextStyle(color: Colors.black),
+                  floatingLabelStyle: const TextStyle(color: Colors.black),
                   enabledBorder: InputBorder.none,
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),

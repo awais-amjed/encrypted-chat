@@ -1,4 +1,5 @@
 import 'package:ecat/controller/notification/notification_controller.dart';
+import 'package:ecat/controller/theme_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class _NotificationWidgetState extends State<NotificationWidget>
     with SingleTickerProviderStateMixin {
   final NotificationController _notificationController =
       Get.find(tag: K.notificationControllerTag);
+  final ThemeController _themeController = Get.find(tag: K.themeControllerTag);
 
   late final Animation<Offset> _offsetAnimation;
   Routes? route;
@@ -49,43 +51,52 @@ class _NotificationWidgetState extends State<NotificationWidget>
       position: _offsetAnimation,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-        child: Material(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          color: Colors.green.shade100,
-          elevation: 4,
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.blue,
+        child: Obx(
+          () => Material(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            color: _themeController.isDarkMode.value
+                ? K.darkSecondary
+                : K.lightPrimary,
+            elevation: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/logo.png',
+                    width: 50,
                   ),
-                  padding: const EdgeInsets.all(8),
-                  child: const Icon(
-                    Icons.message,
-                    color: Colors.white,
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Obx(
+                      () => Text(
+                        _notificationController.message.value,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Obx(() => Text(_notificationController.message.value)),
-                ),
-                const SizedBox(width: 20),
-                IconButton(
-                  splashColor: Colors.transparent,
-                  onPressed: () {
-                    _notificationController.animationControllers[route!]!
-                        .reverse();
-                  },
-                  icon: const Icon(
-                    Icons.close,
-                    size: 15,
+                  const SizedBox(width: 20),
+                  IconButton(
+                    splashColor: Colors.transparent,
+                    onPressed: () {
+                      _notificationController.animationControllers[route!]!
+                          .reverse();
+                    },
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.black,
+                      size: 25,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

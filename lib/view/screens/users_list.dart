@@ -29,14 +29,12 @@ class UsersList extends StatelessWidget {
                   _notificationController.showNotification();
                 },
                 icon: const Icon(Icons.search),
-                color: Colors.black,
               ),
               IconButton(
                 onPressed: () {
                   _usersListController.getUsers();
                 },
                 icon: const Icon(Icons.refresh),
-                color: Colors.black,
               ),
             ],
           ),
