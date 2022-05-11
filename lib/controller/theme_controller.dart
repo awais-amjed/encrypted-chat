@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ThemeController extends GetxController {
-  late Rx<Color> backgroundColor;
-  late Rx<Color> textColor;
+  RxBool isDarkMode = true.obs;
+
+  void changeTheme() {
+    isDarkMode.value = !isDarkMode.value;
+  }
 
   void darkMode() {
     // TODO Colors to be decided

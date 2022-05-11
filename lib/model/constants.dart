@@ -6,7 +6,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class K {
   // Colors
-  // TODO Colors to be decided
+  static const Color whiteText = Colors.white;
+  static const Color blackText = Colors.black;
+  static const Color lightPrimary = Colors.white;
+  static const Color lightSecondary = Color(0xFFf02e65);
+  static const Color darkPrimary = Color(0xFF171d37);
+  static const Color darkSecondary = Color(0xFFc7d8eb);
 
   // Controller tags
   static const String appWriteControllerTag = 'appWriteControllerTag';
@@ -17,6 +22,7 @@ class K {
   static const String usersListControllerTag = 'usersListControllerTag';
   static const String homeControllerTag = 'homeControllerTag';
   static const String notificationControllerTag = 'notificationControllerTag';
+  static const String themeControllerTag = 'themeControllerTag';
 
   // Functions
   static void showToast({required String message, Toast? toastLength}) {

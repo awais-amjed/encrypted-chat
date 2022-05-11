@@ -1,5 +1,6 @@
 import 'package:dismiss_keyboard_on_tap/dismiss_keyboard_on_tap.dart';
 import 'package:ecat/controller/app_write_controller.dart';
+import 'package:ecat/controller/theme_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:ecat/view/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,12 @@ void main() async {
     permanent: true,
   );
 
+  Get.put(
+    ThemeController(),
+    tag: K.themeControllerTag,
+    permanent: true,
+  );
+
   runApp(const ECat());
 }
 
@@ -27,8 +34,25 @@ class ECat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return DismissKeyboardOnTap(
-        child: const GetMaterialApp(
-          home: AuthScreen(),
+        child: GetMaterialApp(
+          // theme: ThemeData(
+          //   brightness: Brightness.light,
+          //   primaryColor: K.lightSecondary,
+          //   colorScheme: const ColorScheme.light(
+          //     primary: K.lightSecondary,
+          //     secondary: K.lightSecondary,
+          //     background: K.lightPrimary,
+          //     tertiary: K.lightSecondary,
+          //   ),
+          //   buttonTheme: const ButtonThemeData(
+          //     colorScheme: ColorScheme.light(
+          //       primary: K.lightSecondary,
+          //       secondary: K.lightSecondary,
+          //     ),
+          //     buttonColor: K.lightSecondary,
+          //   ),
+          // ),
+          home: const AuthScreen(),
         ),
       );
     });
