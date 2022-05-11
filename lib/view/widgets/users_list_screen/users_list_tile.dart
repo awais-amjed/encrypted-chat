@@ -1,9 +1,8 @@
 import 'package:ecat/model/classes/custom_user.dart';
 import 'package:ecat/view/screens/chat_screen.dart';
+import 'package:ecat/view/widgets/general/avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../general/CustomNetworkImage.dart';
 
 class UserListTile extends StatelessWidget {
   const UserListTile({Key? key, required this.user}) : super(key: key);
@@ -19,17 +18,13 @@ class UserListTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ClipOval(
-                child: CustomNetworkImage(
-                  url: user.imageURL,
-                  fit: BoxFit.cover,
-                  height: 40,
-                  width: 40,
-                ),
+              child: AvatarWidget(
+                size: 30,
+                image: user.imageURL,
               ),
             ),
             Expanded(

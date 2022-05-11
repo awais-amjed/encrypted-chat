@@ -17,12 +17,22 @@ class CustomNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return url == null
+    if (url != null) {
+      if (url!.contains('assets') && url!.contains('saved')) {
+        return Image.asset(
+          url!,
+          height: height,
+          width: width,
+          fit: fit,
+        );
+      }
+    }
+
+    return url != null
         ? CachedNetworkImage(
             imageUrl: url ?? '',
             placeholder: (context, url) => const SizedBox(),
             errorWidget: (context, url, error) =>
-                //TODO Add placeholder
                 Image.asset('assets/images/logo.png'),
             height: height,
             width: width,

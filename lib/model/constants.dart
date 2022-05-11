@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,8 +28,11 @@ class K {
   }
 
   static showErrorToast(error) {
-    print(error);
     showToast(message: error.toString());
+  }
+
+  static getRandomImage() {
+    return 'assets/images/saved/kitty (${0 + Random().nextInt(50 - 0)}).png';
   }
 
   static Future<void> showDialog({

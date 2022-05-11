@@ -1,59 +1,37 @@
-import 'package:ecat/controller/user_controller.dart';
-import 'package:ecat/model/constants.dart';
-import 'package:ecat/model/helper_functions.dart';
-import 'package:ecat/view/screens/users_list.dart';
-import 'package:ecat/view/widgets/home_screen/chat_tile_widget.dart';
+import 'package:ecat/view/screens/ongoing_chats.dart';
+import 'package:ecat/view/widgets/home_screen/drawer_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/config.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 
+import '../../controller/home/home_controller.dart';
 import '../widgets/general/notification_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final UserController _userController = Get.find(tag: K.userControllerTag);
-
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: HelperFunctions.getAppBar(
-            title: 'Encrypted Chat',
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.search),
-              ),
-            ],
-            leading: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.settings),
-            ),
+    return GetBuilder<HomeController>(
+      builder: (controller) => Stack(
+        children: [
+          ZoomDrawer(
+            controller: controller.zoomDrawerController,
+            menuScreen: const DrawerScreen(),
+            style: DrawerStyle.defaultStyle,
+            mainScreen: const OngoingChats(),
+            borderRadius: 24.0,
+            showShadow: true,
+            angle: 0.0,
+            drawerShadowsBackgroundColor: Colors.grey,
+            slideWidth: MediaQuery.of(context).size.width * 0.65,
+            menuBackgroundColor: Colors.white,
+            androidCloseOnBackTap: true,
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Get.to(() => const UsersList());
-            },
-            child: const Icon(
-              Icons.message,
-            ),
-          ),
-          body: Obx(
-            () => _userController.onGoingChats.isEmpty
-                ? const Center(
-                    child: Text('Click Message Icon to start a chat'),
-                  )
-                : ListView.builder(
-                    itemCount: _userController.onGoingChats.length,
-                    itemBuilder: (context, index) => ChatTileWidget(
-                      chatTile: _userController.onGoingChats.elementAt(index),
-                    ),
-                  ),
-          ),
-        ),
-        const NotificationWidget(),
-      ],
+          const NotificationWidget(),
+        ],
+      ),
     );
   }
 }

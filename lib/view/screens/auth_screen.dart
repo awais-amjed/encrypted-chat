@@ -1,4 +1,5 @@
 import 'package:ecat/controller/auth/auth_controller.dart';
+import 'package:ecat/controller/home/home_controller.dart';
 import 'package:ecat/view/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -36,6 +37,7 @@ class AuthScreen extends StatelessWidget {
         },
         loginAfterSignUp: false,
         onSubmitAnimationCompleted: () {
+          Get.put<HomeController>(HomeController());
           Get.off(() => const HomeScreen());
         },
         messages: LoginMessages(
