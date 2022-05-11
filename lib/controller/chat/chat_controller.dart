@@ -42,6 +42,7 @@ class ChatController extends GetxController {
 
   bool loadingMoreData = false;
   String? cursor;
+  bool showingDescriptionError = false;
 
   ChatController({
     required this.user1,
@@ -114,6 +115,7 @@ class ChatController extends GetxController {
                 message: types.TextMessage.fromJson(
               jsonDecode(myMessages.last),
             )));
+            showingDescriptionError = false;
           }
         }
       }
@@ -270,7 +272,8 @@ class ChatController extends GetxController {
     return message.copyWith(text: encrypted) as types.TextMessage;
   }
 
-  types.TextMessage decryptMessage({required types.TextMessage message}) {
+  types.TextMessage decryptMessage(
+      {required types.TextMessage message, bool showToast = true}) {
     String? decrypted;
     try {
       decrypted =
@@ -279,15 +282,20 @@ class ChatController extends GetxController {
     if (decrypted != null) {
       return message.copyWith(text: decrypted) as types.TextMessage;
     }
-    K.showToast(message: 'Unable to Decrypt message');
+    if (!showingDescriptionError) {
+      K.showToast(message: 'Unable to Decrypt messages');
+      showingDescriptionError = true;
+    }
     return message;
   }
 
   List<types.TextMessage> decryptMessages(
       {required List<types.TextMessage> messages}) {
-    return messages
+    List<types.TextMessage> temp = messages
         .map<types.TextMessage>((e) => decryptMessage(message: e))
         .toList();
+    showingDescriptionError = false;
+    return temp;
   }
 
   Future<List<String>> getPartitions({required String collectionID}) async {
@@ -322,7 +330,6 @@ class ChatController extends GetxController {
   }
 
   void loadMoreMessages() async {
-    print(cursor);
     if (loadingMoreData) {
       return;
     }
