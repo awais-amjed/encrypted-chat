@@ -39,7 +39,7 @@ class K {
   }
 
   static getRandomImage() {
-    return 'assets/images/saved/kitty (${0 + Random().nextInt(50 - 0)}).png';
+    return 'assets/images/saved/kitty (${0 + Random().nextInt(47)}).png';
   }
 
   static Future<void> showDialog({

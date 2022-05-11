@@ -65,7 +65,7 @@ class _NotificationWidgetState extends State<NotificationWidget>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/logo.png',
+                    'assets/icons/notification.png',
                     width: 50,
                   ),
                   const SizedBox(width: 20),

@@ -4,6 +4,7 @@ import 'package:ecat/view/screens/chat_screen.dart';
 import 'package:ecat/view/widgets/general/avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../controller/user_controller.dart';
 
@@ -26,72 +27,76 @@ class ChatTileWidget extends StatelessWidget {
         }
       },
       child: Container(
+        height: 100,
         color: Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  print('nice');
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: AvatarWidget(
-                    size: 35,
-                    image: chatTile.user.imageURL,
-                  ),
-                ),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4.w),
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                print('nice');
+              },
+              child: AvatarWidget(
+                size: 50,
+                image: chatTile.user.imageURL,
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
                     chatTile.user.name,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: 70),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(
-                      () => chatTile.messageStatus.value ==
-                              MessageStatus.newUser
-                          ? TextButton(
-                              onPressed: () async {
-                                loading.value = true;
-                                final UserController _ =
-                                    Get.find(tag: K.userControllerTag);
-                                if (await _.addChatID(
-                                    newID: chatTile.user.id, update: true)) {
-                                  Get.to(() =>
-                                      ChatScreen(selectedUser: chatTile.user));
-                                }
-                                loading.value = false;
-                              },
-                              child: loading.value
-                                  ? const CircularProgressIndicator()
-                                  : const Text('Accept'),
-                            )
-                          : Icon(
-                              Icons.circle,
-                              size: 20,
-                              color: chatTile.messageStatus.value ==
-                                      MessageStatus.unRead
-                                  ? Colors.green
-                                  : Colors.orange,
-                            ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 13),
+                  const Text(
+                    'Hi How are you',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Obx(
+              () => chatTile.messageStatus.value == MessageStatus.read
+                  ? Image.asset(
+                      'assets/icons/sleep.png',
+                      height: 40,
+                    )
+                  : chatTile.messageStatus.value == MessageStatus.newUser
+                      ? ElevatedButton(
+                          onPressed: () async {
+                            loading.value = true;
+                            final UserController _ =
+                                Get.find(tag: K.userControllerTag);
+                            if (await _.addChatID(
+                                newID: chatTile.user.id, update: true)) {
+                              Get.to(() =>
+                                  ChatScreen(selectedUser: chatTile.user));
+                            }
+                            loading.value = false;
+                          },
+                          child: loading.value
+                              ? const CircularProgressIndicator()
+                              : const Text('Accept'),
+                        )
+                      : Image.asset(
+                          'assets/icons/notification.png',
+                          height: 40,
+                        ),
+            ),
+          ],
         ),
       ),
     );

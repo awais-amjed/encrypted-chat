@@ -45,9 +45,14 @@ class UsersList extends StatelessWidget {
                     ? const Center(child: Text('No User Found'))
                     : ListView.builder(
                         itemCount: _usersListController.allUsers.value?.length,
-                        itemBuilder: (context, index) => UserListTile(
-                          user: _usersListController.allUsers.value!
-                              .elementAt(index),
+                        itemBuilder: (context, index) => Padding(
+                          padding: index == 0
+                              ? const EdgeInsets.only(top: 20.0)
+                              : EdgeInsets.zero,
+                          child: UserListTile(
+                            user: _usersListController.allUsers.value!
+                                .elementAt(index),
+                          ),
                         ),
                       ),
           ),

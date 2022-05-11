@@ -46,8 +46,14 @@ class OngoingChats extends GetView<HomeController> {
               )
             : ListView.builder(
                 itemCount: _userController.onGoingChats.length,
-                itemBuilder: (context, index) => ChatTileWidget(
-                  chatTile: _userController.onGoingChats.elementAt(index),
+                itemBuilder: (context, index) => Padding(
+                  padding: index == 0
+                      ? const EdgeInsets.only(top: 20.0)
+                      : EdgeInsets.zero,
+                  child: ChatTileWidget(
+                    chatTile:
+                        _userController.onGoingChats.reversed.elementAt(index),
+                  ),
                 ),
               ),
       ),
