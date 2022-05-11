@@ -14,7 +14,7 @@ class AppWriteController extends GetxController {
     client.setSelfSigned(status: true);
 
     setEndPoint(endPoint: 'http://192.168.100.2/v1');
-    setProjectID(id: 'ecat');
+    setProjectID(id: 'yolo');
 
     database = Database(client);
 

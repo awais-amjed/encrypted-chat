@@ -80,14 +80,20 @@ class NotificationController extends GetxController {
 
     RealtimeSubscription _notificationSubscription =
         _databaseController.subscribeToNotifications();
-    _notificationSubscription.stream.listen((event) {
+    _notificationSubscription.stream.listen((event) async {
       if (event.event == 'database.documents.update') {
         final List<String> newNotifications =
             event.payload['user_ids'].map<String>((e) => e.toString()).toList();
         if (newNotifications.length > notificationsList.length &&
             currentChat != newNotifications.last) {
           CustomUser? user = _usersListController.allUsers.value
-              ?.firstWhere((element) => element.id == newNotifications.last);
+              ?.firstWhereOrNull(
+                  (element) => element.id == newNotifications.last);
+          if (user == null) {
+            await _usersListController.getUsers();
+            user = _usersListController.allUsers.value?.firstWhereOrNull(
+                (element) => element.id == newNotifications.last);
+          }
           showNotification(name: user?.name);
         }
         notificationsList.value = newNotifications;
