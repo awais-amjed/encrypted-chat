@@ -225,6 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.2"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.5.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -300,6 +307,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.6"
+  flutter_qr_reader:
+    dependency: "direct main"
+    description:
+      name: flutter_qr_reader
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   flutter_signin_button:
     dependency: transitive
     description:

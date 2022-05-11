@@ -1,10 +1,15 @@
+import 'package:crypton/crypton.dart';
 import 'package:ecat/controller/encryption/encryption_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:ecat/model/helper_functions.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../controller/storage/local_storage_controller.dart';
 
 class QRCode extends StatelessWidget {
   const QRCode({Key? key}) : super(key: key);
@@ -19,7 +24,29 @@ class QRCode extends StatelessWidget {
         SizedBox(
           width: 80,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () async {
+              FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+              if (result != null) {
+                final String data =
+                    await FlutterQrReader.imgScan(result.files.single.path!);
+                K.showDialog(
+                  context: context,
+                  title: 'Save your Private Key?',
+                  cancelText: 'Yes',
+                  confirmText: 'No',
+                  content:
+                      'This will override any previous keys saved on this device. So be careful! Do you want to proceed anyway?',
+                  onCancel: () {
+                    final LocalStorageController _local =
+                        Get.find(tag: K.localStorageControllerTag);
+                    _encryptionController.privateKey =
+                        RSAPrivateKey.fromString(data);
+                    _local.savePrivateKey(privateKey: data);
+                  },
+                );
+              } else {}
+            },
             child: const Text('Import'),
           ),
         ),

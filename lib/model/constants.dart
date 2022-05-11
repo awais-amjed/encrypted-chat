@@ -51,6 +51,8 @@ class K {
     String? confirmText,
     Function? onConfirm,
     Function? onCancel,
+    Color? cancelColor,
+    Color? confirmColor,
   }) {
     return showAnimatedDialog(
       context: context,
@@ -66,6 +68,8 @@ class K {
           onNegativeClick: () {
             Navigator.of(context).pop(onCancel != null ? onCancel() : null);
           },
+          negativeTextStyle: TextStyle(color: cancelColor ?? Colors.red),
+          positiveTextStyle: TextStyle(color: confirmColor ?? Colors.green),
         );
       },
       animationType: DialogTransitionType.scale,

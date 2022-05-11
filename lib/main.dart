@@ -41,6 +41,17 @@ class ECat extends StatelessWidget {
             listTileTheme: const ListTileThemeData(
               iconColor: K.blackText,
             ),
+            dialogTheme: DialogTheme(
+              backgroundColor: K.whiteText,
+              titleTextStyle: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
             colorScheme: const ColorScheme.light(
               primary: K.lightSecondary,
               secondary: K.lightSecondary,
@@ -69,6 +80,20 @@ class ECat extends StatelessWidget {
             scaffoldBackgroundColor: K.darkPrimary,
             listTileTheme: const ListTileThemeData(
               iconColor: K.whiteText,
+            ),
+            dialogTheme: DialogTheme(
+              backgroundColor: K.darkSecondary,
+              contentTextStyle: const TextStyle(
+                color: Colors.black,
+              ),
+              titleTextStyle: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
             inputDecorationTheme: const InputDecorationTheme(
               prefixIconColor: Colors.black,

@@ -71,7 +71,7 @@ class AuthController extends GetxController {
             Get.find(tag: K.encryptionControllerTag);
         RSAKeypair keypair = _encryptionController.generateNewKeys();
 
-        LocalStorageController _localStorageControllerTag =
+        LocalStorageController _localStorageController =
             Get.find(tag: K.localStorageControllerTag);
         await _databaseController
             .updatePublicKey(publicKey: keypair.publicKey.toString())
@@ -85,7 +85,7 @@ class AuthController extends GetxController {
         );
 
         if (error == null) {
-          _localStorageControllerTag.savePrivateKey(
+          _localStorageController.savePrivateKey(
               privateKey: keypair.privateKey.toString());
         }
       }
