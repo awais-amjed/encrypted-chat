@@ -1,5 +1,7 @@
 import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/constants.dart';
+import 'package:ecat/view/screens/appwrite_setup.dart';
+import 'package:ecat/view/screens/qr_code.dart';
 import 'package:ecat/view/widgets/general/avatar_widget.dart';
 import 'package:ecat/view/widgets/general/theme_switch_button.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,7 @@ class DrawerScreen extends GetView<HomeController> {
               SizedBox(height: 6.h),
               Expanded(
                 child: ListView(
-                  children: const [
+                  children: [
                     _HelperListTile(
                       text: 'Your space',
                       icon: Icons.account_circle,
@@ -46,14 +48,21 @@ class DrawerScreen extends GetView<HomeController> {
                     _HelperListTile(
                       text: 'Private Key',
                       icon: Icons.key,
+                      onTap: () {
+                        Get.to(() => const QRCode());
+                      },
                     ),
                     _HelperListTile(
                       text: 'Update Backend',
                       icon: Icons.storage,
+                      onTap: () {
+                        Get.to(() => const AppWriteSetup());
+                      },
                     ),
                   ],
                 ),
               ),
+              SizedBox(height: 6.h),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: ThemeSwitchButton(),
@@ -75,11 +84,13 @@ class DrawerScreen extends GetView<HomeController> {
 }
 
 class _HelperListTile extends StatelessWidget {
-  const _HelperListTile({Key? key, required this.text, required this.icon})
+  const _HelperListTile(
+      {Key? key, required this.text, required this.icon, this.onTap})
       : super(key: key);
 
   final String text;
   final IconData icon;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +105,7 @@ class _HelperListTile extends StatelessWidget {
         text,
         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
       ),
+      onTap: onTap,
     );
   }
 }
