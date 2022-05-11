@@ -16,6 +16,7 @@ class NotificationController extends GetxController {
 
   final Map<Routes, AnimationController?> animationControllers = {};
   RxString message = 'You have a new message'.obs;
+  CustomUser? notificationFrom;
   String? currentChat;
 
   final DatabaseController _databaseController =
@@ -25,7 +26,8 @@ class NotificationController extends GetxController {
 
   NotificationController({required this.userID});
 
-  void showNotification({String? name}) {
+  void showNotification({String? name, CustomUser? notifier}) {
+    notificationFrom = notifier;
     if (name != null) {
       message.value = '$name sent a message';
     } else {
@@ -94,7 +96,7 @@ class NotificationController extends GetxController {
             user = _usersListController.allUsers.value?.firstWhereOrNull(
                 (element) => element.id == newNotifications.last);
           }
-          showNotification(name: user?.name);
+          showNotification(name: user?.name, notifier: user);
         }
         notificationsList.value = newNotifications;
         onListChange(notifications: notificationsList.value);

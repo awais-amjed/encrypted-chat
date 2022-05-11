@@ -1,8 +1,10 @@
 import 'package:ecat/controller/notification/notification_controller.dart';
 import 'package:ecat/controller/theme_controller.dart';
 import 'package:ecat/model/constants.dart';
+import 'package:ecat/view/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 class NotificationWidget extends StatefulWidget {
   const NotificationWidget({Key? key}) : super(key: key);
@@ -50,52 +52,60 @@ class _NotificationWidgetState extends State<NotificationWidget>
     return SlideTransition(
       position: _offsetAnimation,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-        child: Obx(
-          () => Material(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            color: _themeController.isDarkMode.value
-                ? K.darkSecondary
-                : K.lightPrimary,
-            elevation: 4,
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/icons/notification.png',
-                    width: 50,
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Obx(
-                      () => Text(
-                        _notificationController.message.value,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+        padding: EdgeInsets.fromLTRB(6.w, 5, 6.w, 0),
+        child: GestureDetector(
+          onTap: () {
+            if (_notificationController.notificationFrom != null) {
+              Get.to(() => ChatScreen(
+                  selectedUser: _notificationController.notificationFrom!));
+            }
+          },
+          child: Obx(
+            () => Material(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              color: _themeController.isDarkMode.value
+                  ? K.darkSecondary
+                  : K.lightPrimary,
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/notification.png',
+                      width: 50,
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Obx(
+                        () => Text(
+                          _notificationController.message.value,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 20),
-                  IconButton(
-                    splashColor: Colors.transparent,
-                    onPressed: () {
-                      _notificationController.animationControllers[route!]!
-                          .reverse();
-                    },
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.black,
-                      size: 25,
+                    const SizedBox(width: 20),
+                    IconButton(
+                      splashColor: Colors.transparent,
+                      onPressed: () {
+                        _notificationController.animationControllers[route!]!
+                            .reverse();
+                      },
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.black,
+                        size: 25,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

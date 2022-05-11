@@ -1,6 +1,6 @@
 import 'package:ecat/controller/theme_controller.dart';
 import 'package:ecat/model/constants.dart';
-import 'package:ecat/view/widgets/general/CustomNetworkImage.dart';
+import 'package:ecat/view/widgets/general/custom_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
