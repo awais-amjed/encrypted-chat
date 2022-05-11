@@ -21,20 +21,21 @@ class DrawerScreen extends GetView<HomeController> {
           padding: EdgeInsets.fromLTRB(20.0, 10.h, 0, 10.h),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const AvatarWidget(size: 80),
-              const SizedBox(height: 20),
+              const Center(child: AvatarWidget(size: 80)),
+              const SizedBox(height: 15),
               Obx(
                 () => Text(
                   _userController.userData.value.name,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: 6.h),
               Expanded(
                 child: ListView(
                   children: const [
@@ -47,17 +48,19 @@ class DrawerScreen extends GetView<HomeController> {
                       icon: Icons.key,
                     ),
                     _HelperListTile(
-                      text: 'Update Backend Parameters',
+                      text: 'Update Backend',
                       icon: Icons.storage,
                     ),
                   ],
                 ),
               ),
-              const ThemeSwitchButton(),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: ThemeSwitchButton(),
+              ),
               const SizedBox(height: 20),
               SizedBox(
                 height: 50,
-                width: 45.w,
                 child: ElevatedButton(
                   onPressed: () {},
                   child: const Text('Log out'),
@@ -83,13 +86,13 @@ class _HelperListTile extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        size: 30,
+        size: 25,
       ),
       minLeadingWidth: 20,
       contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       title: Text(
         text,
-        style: const TextStyle(fontSize: 15),
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
       ),
     );
   }
