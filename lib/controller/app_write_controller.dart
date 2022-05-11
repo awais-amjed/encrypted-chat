@@ -13,8 +13,8 @@ class AppWriteController extends GetxController {
     super.onInit();
     client.setSelfSigned(status: true);
 
-    setEndPoint(endPoint: 'http://192.168.100.2/v1');
-    setProjectID(id: 'yolo');
+    client.setEndpoint('http://192.168.100.2/v1');
+    client.setProject('yolo');
 
     database = Database(client);
 
@@ -30,11 +30,9 @@ class AppWriteController extends GetxController {
     );
   }
 
-  void setProjectID({required String id}) {
+  void updateParams({required String id, required String endPoint}) {
     client.setProject(id);
-  }
-
-  void setEndPoint({required String endPoint}) {
     client.setEndpoint(endPoint);
+    database = Database(client);
   }
 }

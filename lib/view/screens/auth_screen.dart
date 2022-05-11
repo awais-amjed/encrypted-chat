@@ -1,6 +1,7 @@
 import 'package:ecat/controller/auth/auth_controller.dart';
 import 'package:ecat/controller/home/home_controller.dart';
 import 'package:ecat/model/constants.dart';
+import 'package:ecat/view/screens/appwrite_setup.dart';
 import 'package:ecat/view/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -80,14 +81,12 @@ class AuthScreen extends StatelessWidget {
               title: 'ENCRYPTED CHAT',
               logo: const AssetImage('assets/images/logo.png'),
               onLogin: (data) async {
-                return 'wtf';
                 return await _authController.signIn(
                   email: data.name,
                   password: data.password,
                 );
               },
               onSignup: (data) async {
-                return 'wtf';
                 if (data.name == null ||
                     data.password == null ||
                     data.additionalSignupData == null ||
@@ -137,7 +136,9 @@ class AuthScreen extends StatelessWidget {
                 iconSize: 25,
                 color: Colors.white,
                 icon: const Icon(Icons.settings_rounded),
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(() => const AppWriteSetup(allowDarkMode: true));
+                },
               ),
             ),
           ),
