@@ -24,6 +24,7 @@ class K {
   static const String homeControllerTag = 'homeControllerTag';
   static const String notificationControllerTag = 'notificationControllerTag';
   static const String themeControllerTag = 'themeControllerTag';
+  static const String searchControllerTag = 'searchControllerTag';
 
   // Functions
   static void showToast({required String message, Toast? toastLength}) {

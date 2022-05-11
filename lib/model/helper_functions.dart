@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'constants.dart';
+
 class HelperFunctions {
   static getAppBar({
-    required String title,
+    String? title,
     Widget? leading,
     List<Widget>? actions,
     double? leadingWidth,
   }) {
     return AppBar(
       centerTitle: true,
-      title: Text(
-        title,
-      ),
+      title: title == null
+          ? null
+          : Text(
+              title,
+              style: const TextStyle(
+                color: K.whiteText,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
       toolbarHeight: 80,
       elevation: 2,
-      actions: actions,
       leading: leading,
+      actions: actions,
       leadingWidth: leadingWidth,
     );
   }

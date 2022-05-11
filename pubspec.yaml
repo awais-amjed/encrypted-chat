@@ -27,6 +27,7 @@ dependencies:
   intl: ^0.17.0
   flutter_zoom_drawer: ^3.0.1
   flutter_switch: ^0.3.2
+  animated_search_bar: ^2.2.0
 
 dev_dependencies:
   flutter_test:

@@ -50,8 +50,6 @@ class ECat extends StatelessWidget {
             inputDecorationTheme: const InputDecorationTheme(
               prefixIconColor: Colors.black,
               suffixIconColor: Colors.black,
-              labelStyle: TextStyle(color: Colors.black),
-              floatingLabelStyle: TextStyle(color: Colors.black),
             ),
             textTheme: const TextTheme(
               headline1: TextStyle(color: K.whiteText),
