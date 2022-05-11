@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../controller/home/home_controller.dart';
+import '../../screens/auth_screen.dart';
 
 class DrawerScreen extends GetView<HomeController> {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class DrawerScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final UserController _userController = Get.find(tag: K.userControllerTag);
+    RxBool loggingOut = false.obs;
 
     return Scaffold(
       body: SafeArea(
@@ -70,9 +72,38 @@ class DrawerScreen extends GetView<HomeController> {
               const SizedBox(height: 20),
               SizedBox(
                 height: 50,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Log out'),
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: () async {
+                      loggingOut.value = true;
+                      bool? result = await K.showDialog(
+                        context: context,
+                        title: 'Save your private Key first!',
+                        content:
+                            'Make sure to make a backup of your private key. If you login with another account, '
+                            'your key might get overwritten and you will loose all your data',
+                        cancelText: 'Already have a backup',
+                        confirmText: 'Take me to private key',
+                        onConfirm: () {
+                          return true;
+                        },
+                        onCancel: () {
+                          return false;
+                        },
+                      );
+                      if (result == false) {
+                        await _userController.logOut().then((value) {
+                          Get.offAll(() => const AuthScreen());
+                        }).catchError(K.showErrorToast);
+                      } else if (result == true) {
+                        Get.to(() => const QRCode());
+                      }
+                      loggingOut.value = false;
+                    },
+                    child: loggingOut.value
+                        ? const CircularProgressIndicator()
+                        : const Text('Log out'),
+                  ),
                 ),
               ),
             ],

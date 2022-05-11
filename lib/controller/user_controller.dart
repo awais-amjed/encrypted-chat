@@ -30,17 +30,14 @@ class UserController extends GetxController {
     _databaseController = Get.put(
       DatabaseController(session: currentSession),
       tag: K.databaseControllerTag,
-      permanent: true,
     );
     _usersListController = Get.put(
       UsersListController(currentUserID: currentSession.userId),
       tag: K.usersListControllerTag,
-      permanent: true,
     );
     _notificationController = Get.put(
       NotificationController(userID: currentSession.userId),
       tag: K.notificationControllerTag,
-      permanent: true,
     );
 
     // Gets locally saved user data and updates it with new user data
@@ -143,5 +140,9 @@ class UserController extends GetxController {
       userData.value = CustomUser.fromJson(remoteData.data);
       _localStorageController.saveUser(user: userData.value);
     }
+  }
+
+  Future logOut() async {
+    return await _databaseController.logOut();
   }
 }

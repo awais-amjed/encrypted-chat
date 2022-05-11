@@ -21,12 +21,10 @@ class AppWriteController extends GetxController {
     Get.put(
       LocalStorageController(),
       tag: K.localStorageControllerTag,
-      permanent: true,
     );
     Get.put(
       EncryptionController(),
       tag: K.encryptionControllerTag,
-      permanent: true,
     );
   }
 

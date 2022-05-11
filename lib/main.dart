@@ -15,7 +15,6 @@ void main() async {
   Get.put(
     AppWriteController(),
     tag: K.appWriteControllerTag,
-    permanent: true,
   );
 
   runApp(const ECat());

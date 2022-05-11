@@ -18,14 +18,16 @@ class DatabaseController extends GetxController {
 
   DatabaseController({required this.session});
 
+  final AppWriteController _appWriteController =
+      Get.find(tag: K.appWriteControllerTag);
+
   @override
   void onInit() {
     super.onInit();
 
-    AppWriteController _ = Get.find(tag: K.appWriteControllerTag);
-    _database = _.database;
-    _functions = Functions(_.client);
-    _realtime = Realtime(_.client);
+    _database = _appWriteController.database;
+    _functions = Functions(_appWriteController.client);
+    _realtime = Realtime(_appWriteController.client);
 
     subscribeToNotifications();
   }
@@ -177,5 +179,10 @@ class DatabaseController extends GetxController {
 
   RealtimeSubscription subscribeToChat({required String collectionID}) {
     return _realtime.subscribe(['collections.$collectionID.documents']);
+  }
+
+  Future logOut() async {
+    Account account = Account(_appWriteController.client);
+    return account.deleteSession(sessionId: session.$id);
   }
 }

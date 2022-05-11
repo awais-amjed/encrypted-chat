@@ -105,7 +105,7 @@ class AuthScreen extends StatelessWidget {
               loginAfterSignUp: false,
               onSubmitAnimationCompleted: () {
                 Get.put<HomeController>(HomeController());
-                Get.off(() => const HomeScreen());
+                Get.offAll(() => const HomeScreen());
               },
               messages: LoginMessages(
                 additionalSignUpFormDescription: 'Please Enter your name',

@@ -43,7 +43,7 @@ class K {
     return 'assets/images/saved/kitty (${0 + Random().nextInt(47)}).png';
   }
 
-  static Future<void> showDialog({
+  static Future<dynamic> showDialog({
     required BuildContext context,
     String? title,
     String? content,

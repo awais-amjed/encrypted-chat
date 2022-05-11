@@ -55,7 +55,6 @@ class AuthController extends GetxController {
       final UserController _userController = Get.put(
         UserController(currentSession: session),
         tag: K.userControllerTag,
-        permanent: true,
       );
 
       //Check for Public Key
