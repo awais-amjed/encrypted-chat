@@ -38,14 +38,9 @@ class ChatTileWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4.w),
           child: Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  print('nice');
-                },
-                child: AvatarWidget(
-                  size: 50,
-                  image: chatTile.user.imagePath,
-                ),
+              AvatarWidget(
+                size: 50,
+                image: chatTile.user.imagePath,
               ),
               const SizedBox(width: 20),
               Expanded(
@@ -63,12 +58,19 @@ class ChatTileWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 13),
-                    const Text(
-                      'Hi How are you',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 12,
+                    Obx(
+                      () => Text(
+                        chatTile.messageStatus.value == MessageStatus.newUser
+                            ? 'A new person wants to connect'
+                            : chatTile.messageStatus.value ==
+                                    MessageStatus.unRead
+                                ? 'ooh new messages'
+                                : 'Nothing to see here',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ],
