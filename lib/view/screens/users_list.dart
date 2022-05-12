@@ -52,6 +52,7 @@ class UsersList extends StatelessWidget {
                           child: UserListTile(
                             user: _usersListController.allUsers.value!
                                 .elementAt(index),
+                            index: index,
                           ),
                         ),
                       );
@@ -70,6 +71,7 @@ class UsersList extends StatelessWidget {
                             child: UserListTile(
                               user: _usersListController.allUsers.value!
                                   .elementAt(index),
+                              index: index,
                             ),
                           ),
                         );

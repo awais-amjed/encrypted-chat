@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:ecat/controller/theme_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:ecat/view/widgets/general/custom_network_image.dart';
@@ -44,22 +45,24 @@ class AvatarWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(1000),
           color: Colors.white,
         ),
-        child: Padding(
-          padding: padding ? EdgeInsets.all(size / 5) : EdgeInsets.zero,
-          child: imageFile != null
-              ? ClipOval(
-                  child: Image.file(
-                    imageFile!,
-                    width: !padding ? (size / 5) * 2 + size : size,
-                    height: !padding ? (size / 5) * 2 + size : size,
-                    fit: BoxFit.cover,
+        child: ZoomIn(
+          child: Padding(
+            padding: padding ? EdgeInsets.all(size / 5) : EdgeInsets.zero,
+            child: imageFile != null
+                ? ClipOval(
+                    child: Image.file(
+                      imageFile!,
+                      width: !padding ? (size / 5) * 2 + size : size,
+                      height: !padding ? (size / 5) * 2 + size : size,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : CustomNetworkImage(
+                    url: image,
+                    width: size,
+                    height: size,
                   ),
-                )
-              : CustomNetworkImage(
-                  url: image,
-                  width: size,
-                  height: size,
-                ),
+          ),
         ),
       ),
     );

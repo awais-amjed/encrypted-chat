@@ -29,7 +29,7 @@ class ChatTileWidget extends StatelessWidget {
           Get.to(() => ChatScreen(selectedUser: chatTile.user));
         }
       },
-      child: SlideInLeft(
+      child: FadeIn(
         duration: const Duration(milliseconds: 300),
         delay: Duration(milliseconds: 100 * index),
         child: Container(
