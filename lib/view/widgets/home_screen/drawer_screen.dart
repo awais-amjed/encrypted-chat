@@ -11,6 +11,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../controller/home/home_controller.dart';
 import '../../../controller/notification/notification_controller.dart';
+import '../../../controller/storage/local_storage_controller.dart';
 import '../../screens/auth_screen.dart';
 
 class DrawerScreen extends GetView<HomeController> {
@@ -109,6 +110,9 @@ class DrawerScreen extends GetView<HomeController> {
                               Get.find(tag: K.notificationControllerTag);
                           await _notificationController.notificationSubscription
                               .close();
+                          final LocalStorageController _local =
+                              Get.find(tag: K.localStorageControllerTag);
+                          _local.deleteSession();
                           Get.offAll(() => const AuthScreen());
                         }).catchError(K.showErrorToast);
                       } else if (result == true) {

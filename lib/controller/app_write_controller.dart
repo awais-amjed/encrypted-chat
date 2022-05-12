@@ -63,6 +63,9 @@ class AppWriteController extends GetxController {
           final NotificationController _notificationController =
               Get.find(tag: K.notificationControllerTag);
           await _notificationController.notificationSubscription.close();
+          final LocalStorageController _local =
+              Get.find(tag: K.localStorageControllerTag);
+          _local.deleteSession();
           Get.offAll(() => const AuthScreen());
         }).catchError(K.showErrorToast);
       } else if (result == true) {

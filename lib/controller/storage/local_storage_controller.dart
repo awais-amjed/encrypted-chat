@@ -1,3 +1,4 @@
+import 'package:appwrite/models.dart';
 import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/classes/custom_user.dart';
 import 'package:ecat/model/constants.dart';
@@ -12,6 +13,23 @@ class LocalStorageController extends GetxController {
   final String _privateKeyHolder = '_privateKey';
   final String _userHolder = 'user';
   final String _themeHolder = 'theme';
+  final String _sessionHolder = 'session';
+
+  void saveSession({required Session session}) async {
+    await localStorage.write(_sessionHolder, session.toMap());
+  }
+
+  void deleteSession() async {
+    await localStorage.remove(_sessionHolder);
+  }
+
+  Session? getSession() {
+    final data = localStorage.read(_sessionHolder);
+    if (data != null) {
+      return Session.fromMap(localStorage.read(_sessionHolder));
+    }
+    return null;
+  }
 
   String? readPrivateKey() {
     try {

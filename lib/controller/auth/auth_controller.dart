@@ -68,6 +68,8 @@ class AuthController extends GetxController {
       DatabaseController _databaseController =
           Get.find(tag: K.databaseControllerTag);
       final bool? isKeyFound = await _databaseController.isPublicKeyAvailable();
+      LocalStorageController _localStorageController =
+          Get.find(tag: K.localStorageControllerTag);
       if (isKeyFound == null) {
         error = 'Database Error';
       }
@@ -76,9 +78,6 @@ class AuthController extends GetxController {
         EncryptionController _encryptionController =
             Get.find(tag: K.encryptionControllerTag);
         RSAKeypair keypair = _encryptionController.generateNewKeys();
-
-        LocalStorageController _localStorageController =
-            Get.find(tag: K.localStorageControllerTag);
         await _databaseController
             .updatePublicKey(publicKey: keypair.publicKey.toString())
             .then((value) async {
@@ -192,6 +191,10 @@ class AuthController extends GetxController {
           animationType: DialogTransitionType.scale,
           duration: const Duration(milliseconds: 300),
         );
+      }
+
+      if (error == null) {
+        _localStorageController.saveSession(session: session);
       }
     }).catchError((e) {
       error = e.toString();
