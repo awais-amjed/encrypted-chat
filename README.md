@@ -100,7 +100,7 @@ and For `createUserDocument` check the account.create event
 
 ## Usage
 
-Open your app and set your parameters by clicking the settings icon on the login screen - Enjoy free and private encrypted chat
+Download the apk, install and Open your app - Set your setup information by clicking the settings icon on the login screen - Enjoy free and private encrypted chat
 
 ## Future Improvements
 
