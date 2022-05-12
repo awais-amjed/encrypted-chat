@@ -22,17 +22,17 @@ class ThemeSwitchButton extends StatelessWidget {
           value: _themeController.isDarkMode.value,
           borderRadius: 17.0,
           padding: 2.0,
-          activeToggleColor: const Color(0xFF6E40C9),
+          activeToggleColor: K.darkAppbar,
           inactiveToggleColor: const Color(0xFF2F363D),
           activeSwitchBorder: Border.all(
-            color: const Color(0xFF3C1E70),
+            color: K.darkSecondary,
             width: 6.0,
           ),
           inactiveSwitchBorder: Border.all(
             color: const Color(0xFFD1D5DA),
             width: 6.0,
           ),
-          activeColor: const Color(0xFF271052),
+          activeColor: K.darkSecondary,
           inactiveColor: Colors.white,
           activeIcon: const Icon(
             Icons.nightlight_round,
