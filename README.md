@@ -9,13 +9,13 @@
 <br>
 <br>
 <p style="display: flex; align-items: start; gap: 10px">
-  <img src="/resources/screenshot1.png" width="13%" />
-  <img src="/resources/screenshot2.png" width="13%" />
-  <img src="/resources/screenshot3.png" width="13%" />
-  <img src="/resources/screenshot4.png" width="13%" />
-  <img src="/resources/screenshot5.png" width="13%" />
-  <img src="/resources/screenshot6.png" width="13%" />
-  <img src="/resources/screenshot7.png" width="13%" />
+  <img src="/resources/screenshot1.png" width="13.5%" />
+  <img src="/resources/screenshot2.png" width="13.5%" />
+  <img src="/resources/screenshot3.png" width="13.5%" />
+  <img src="/resources/screenshot4.png" width="13.5%" />
+  <img src="/resources/screenshot5.png" width="13.5%" />
+  <img src="/resources/screenshot6.png" width="13.5%" />
+  <img src="/resources/screenshot7.png" width="13.5%" />
 </p>
 <br>
 
