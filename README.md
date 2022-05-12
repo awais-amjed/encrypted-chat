@@ -38,7 +38,7 @@ docker-compose up -d
 
 ![screenshot](./resources/api.png)
 
-- Register Your Flutter Project
+- Register Your Flutter Project `KEEP PACKAGE NAME AS IS` `coding.fries.ecat`
 
 ![screenshot](./resources/registration.png)
 
