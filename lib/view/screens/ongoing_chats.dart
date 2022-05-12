@@ -29,7 +29,7 @@ class OngoingChats extends GetView<HomeController> {
           },
           icon: AvatarWidget(
             size: 40,
-            image: _userController.userData.value.imageURL,
+            image: _userController.userData.value.imagePath,
           ),
         ),
         actions: [

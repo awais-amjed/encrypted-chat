@@ -2,6 +2,7 @@ import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:ecat/view/screens/appwrite_setup.dart';
 import 'package:ecat/view/screens/qr_code.dart';
+import 'package:ecat/view/screens/your_space.dart';
 import 'package:ecat/view/widgets/general/avatar_widget.dart';
 import 'package:ecat/view/widgets/general/theme_switch_button.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,12 @@ class DrawerScreen extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Center(child: AvatarWidget(size: 80)),
+              Center(
+                child: AvatarWidget(
+                  size: 80,
+                  image: _userController.userData.value.imagePath,
+                ),
+              ),
               const SizedBox(height: 15),
               Obx(
                 () => Text(
@@ -46,18 +52,21 @@ class DrawerScreen extends GetView<HomeController> {
                   children: [
                     _HelperListTile(
                       text: 'Your space',
-                      icon: Icons.account_circle,
+                      imageURL: 'assets/icons/programmer.png',
+                      onTap: () {
+                        Get.to(() => const YourSpace());
+                      },
                     ),
                     _HelperListTile(
                       text: 'Private Key',
-                      icon: Icons.key,
+                      imageURL: 'assets/icons/private-access.png',
                       onTap: () {
                         Get.to(() => const QRCode());
                       },
                     ),
                     _HelperListTile(
                       text: 'Update Backend',
-                      icon: Icons.storage,
+                      imageURL: 'assets/icons/cloud-server.png',
                       onTap: () {
                         Get.to(() => const AppWriteSetup());
                       },
@@ -121,19 +130,19 @@ class DrawerScreen extends GetView<HomeController> {
 
 class _HelperListTile extends StatelessWidget {
   const _HelperListTile(
-      {Key? key, required this.text, required this.icon, this.onTap})
+      {Key? key, required this.text, required this.imageURL, this.onTap})
       : super(key: key);
 
   final String text;
-  final IconData icon;
+  final String imageURL;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(
-        icon,
-        size: 25,
+      leading: Image.asset(
+        imageURL,
+        height: 30,
       ),
       minLeadingWidth: 20,
       contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),

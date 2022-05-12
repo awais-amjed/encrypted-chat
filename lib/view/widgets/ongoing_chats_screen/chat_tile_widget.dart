@@ -44,7 +44,7 @@ class ChatTileWidget extends StatelessWidget {
                 },
                 child: AvatarWidget(
                   size: 50,
-                  image: chatTile.user.imageURL,
+                  image: chatTile.user.imagePath,
                 ),
               ),
               const SizedBox(width: 20),

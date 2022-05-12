@@ -84,6 +84,9 @@ class AuthController extends GetxController {
             .then((value) async {
           _userController.userData.value.publicKey =
               keypair.publicKey.toString();
+          _userController.userData.value.imagePath = K.getRandomImage();
+          await _databaseController.updateUserData(
+              data: {'image_path': _userController.userData.value.imagePath});
         }).catchError(
           (e) {
             error = e.toString();

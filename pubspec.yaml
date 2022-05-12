@@ -32,6 +32,7 @@ dependencies:
   flutter_qr_reader: ^1.0.5
   file_picker: ^4.5.1
   animate_do: ^2.1.0
+  image_picker: ^0.8.5+2
 
 dev_dependencies:
   flutter_test:

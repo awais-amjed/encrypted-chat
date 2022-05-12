@@ -84,7 +84,7 @@ class AppWriteSetup extends StatelessWidget {
                   SizedBox(height: 8.h),
                   SizedBox(
                     height: 50,
-                    width: 200,
+                    width: 195,
                     child: ElevatedButton(
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(

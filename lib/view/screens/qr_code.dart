@@ -20,40 +20,45 @@ class QRCode extends StatelessWidget {
         Get.find(tag: K.encryptionControllerTag);
 
     return Scaffold(
-      appBar: HelperFunctions.getAppBar(title: 'Private Key', actions: [
-        SizedBox(
-          width: 80,
-          child: TextButton(
-            onPressed: () async {
-              FilePickerResult? result = await FilePicker.platform.pickFiles();
+      appBar: HelperFunctions.getAppBar(
+        leadingWidth: 100,
+        title: 'Private Key',
+        actions: [
+          SizedBox(
+            width: 80,
+            child: TextButton(
+              onPressed: () async {
+                FilePickerResult? result =
+                    await FilePicker.platform.pickFiles();
 
-              if (result != null) {
-                final String data =
-                    await FlutterQrReader.imgScan(result.files.single.path!);
-                K.showDialog(
-                  context: context,
-                  title: 'Save your Private Key?',
-                  cancelText: 'Yes',
-                  confirmText: 'No',
-                  content:
-                      'This will override any previous keys saved on this device. So be careful! Do you want to proceed anyway?',
-                  onCancel: () {
-                    final LocalStorageController _local =
-                        Get.find(tag: K.localStorageControllerTag);
-                    _encryptionController.privateKey =
-                        RSAPrivateKey.fromString(data);
-                    _local.savePrivateKey(privateKey: data);
-                  },
-                );
-              } else {}
-            },
-            child: const Text(
-              'Import',
-              style: TextStyle(color: Colors.white),
+                if (result != null) {
+                  final String data =
+                      await FlutterQrReader.imgScan(result.files.single.path!);
+                  K.showDialog(
+                    context: context,
+                    title: 'Save your Private Key?',
+                    cancelText: 'Yes',
+                    confirmText: 'No',
+                    content:
+                        'This will override any previous keys saved on this device. So be careful! Do you want to proceed anyway?',
+                    onCancel: () {
+                      final LocalStorageController _local =
+                          Get.find(tag: K.localStorageControllerTag);
+                      _encryptionController.privateKey =
+                          RSAPrivateKey.fromString(data);
+                      _local.savePrivateKey(privateKey: data);
+                    },
+                  );
+                } else {}
+              },
+              child: const Text(
+                'Import',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         child: SingleChildScrollView(

@@ -41,14 +41,14 @@ class _ChatScreenState extends State<ChatScreen> {
     _you = types.User(
       id: widget.selectedUser.id,
       firstName: widget.selectedUser.name,
-      imageUrl: widget.selectedUser.imageURL,
+      imageUrl: widget.selectedUser.imagePath,
     );
 
     UserController _userController = Get.find(tag: K.userControllerTag);
     _me = types.User(
       id: _userController.userData.value.id,
       firstName: _userController.userData.value.name,
-      imageUrl: _userController.userData.value.imageURL,
+      imageUrl: _userController.userData.value.imagePath,
     );
 
     _chatController = Get.put(ChatController(

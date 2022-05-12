@@ -1,14 +1,14 @@
 class CustomUser {
   String id;
   String name;
-  String? imageURL;
+  String? imagePath;
   String? publicKey;
   List<String>? chatIDs;
 
   CustomUser({
     required this.id,
     required this.name,
-    this.imageURL,
+    this.imagePath,
     this.publicKey,
     this.chatIDs,
   });
@@ -16,7 +16,7 @@ class CustomUser {
   Map<String, dynamic> toJson() => {
         '\$id': id,
         'name': name,
-        'image': imageURL,
+        'image_path': imagePath,
         'public_key': publicKey,
         'chat_ids': chatIDs,
       };
@@ -24,7 +24,7 @@ class CustomUser {
   CustomUser.fromJson(Map<String, dynamic> json)
       : id = json['\$id'],
         name = json['name'],
-        imageURL = json['image'],
+        imagePath = json['image_path'],
         publicKey = json['public_key'],
         chatIDs = json['chat_ids']?.map<String>((e) => e.toString()).toList();
 }

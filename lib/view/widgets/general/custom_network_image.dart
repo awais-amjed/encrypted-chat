@@ -18,7 +18,7 @@ class CustomNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (url != null) {
-      if (url!.contains('assets') && url!.contains('saved')) {
+      if (url!.contains('assets/images/saved/')) {
         return Image.asset(
           url!,
           height: height,

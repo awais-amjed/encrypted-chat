@@ -26,7 +26,7 @@ class UserListTile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: AvatarWidget(
                 size: 35,
-                image: user.imageURL,
+                image: user.imagePath,
               ),
             ),
             Expanded(
