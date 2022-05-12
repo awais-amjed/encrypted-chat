@@ -6,8 +6,6 @@
 
 > Self Hosted End to End Encrypted Chat System
 
-<img style="width: 85px" src="assets/images/logo.png" />
-
 <p style="display: flex; align-items: start; gap: 10px">
   <img src="/resources/screenshot1.png" width="13%" />
   <img src="/resources/screenshot2.png" width="13%" />
