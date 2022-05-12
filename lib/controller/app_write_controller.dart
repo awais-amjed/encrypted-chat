@@ -17,9 +17,10 @@ class AppWriteController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    client.setSelfSigned(status: true);
+    // client.setSelfSigned(status: true);
 
-    client.setEndpoint('http://192.168.100.2/v1');
+    client.setEndpoint(
+        'https://8080-appwrite-integrationfor-o1wbqfvan8m.ws-eu44.gitpod.io/v1');
     client.setProject('yolo');
 
     database = Database(client);
@@ -27,10 +28,12 @@ class AppWriteController extends GetxController {
     Get.put(
       LocalStorageController(),
       tag: K.localStorageControllerTag,
+      permanent: true,
     );
     Get.put(
       EncryptionController(),
       tag: K.encryptionControllerTag,
+      permanent: true,
     );
   }
 

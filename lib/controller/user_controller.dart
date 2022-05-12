@@ -31,20 +31,23 @@ class UserController extends GetxController {
     _databaseController = Get.put(
       DatabaseController(session: currentSession),
       tag: K.databaseControllerTag,
+      permanent: true,
     );
     _databaseController.initialize(newSession: currentSession);
     try {
       _usersListController = Get.put(
         UsersListController(currentUserID: currentSession.userId),
         tag: K.usersListControllerTag,
+        permanent: true,
       );
     } catch (e) {}
     _usersListController.setUserID(userID: currentSession.userId);
-    _usersListController.getUsers();
+    await _usersListController.getUsers();
     try {
       _notificationController = Get.put(
         NotificationController(userID: currentSession.userId),
         tag: K.notificationControllerTag,
+        permanent: true,
       );
     } catch (e) {}
     _notificationController.setUserID(newID: currentSession.userId);

@@ -37,10 +37,10 @@ class AuthController extends GetxController {
           password: password,
           name: name,
         )
-        .then((value) => null)
-        .catchError((e) {
-      error = e.toString();
-    });
+        .then((value) => null);
+    //     .catchError((e) {
+    //   error = e.toString();
+    // });
     return error;
   }
 
@@ -60,6 +60,7 @@ class AuthController extends GetxController {
       final UserController _userController = Get.put(
         UserController(currentSession: session),
         tag: K.userControllerTag,
+        permanent: true,
       );
 
       await _userController.initialize(session: session);

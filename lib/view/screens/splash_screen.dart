@@ -25,6 +25,7 @@ class SplashScreen extends StatelessWidget {
         final UserController _userController = Get.put(
           UserController(currentSession: session),
           tag: K.userControllerTag,
+          permanent: true,
         );
         await _userController.initialize(session: session);
         Get.put<HomeController>(HomeController());
