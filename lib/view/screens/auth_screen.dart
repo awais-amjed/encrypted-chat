@@ -86,6 +86,7 @@ class AuthScreen extends StatelessWidget {
                 return await _authController.signIn(
                   email: data.name,
                   password: data.password,
+                  context: context,
                 );
               },
               onSignup: (data) async {

@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import '../model/constants.dart';
 
 class UserController extends GetxController {
-  final Session currentSession;
+  Session currentSession;
   late final Rx<CustomUser> userData;
 
   UserController({required this.currentSession});
@@ -23,29 +23,42 @@ class UserController extends GetxController {
 
   final RxList<ChatTile> onGoingChats = <ChatTile>[].obs;
 
-  @override
-  void onInit() async {
-    super.onInit();
+  bool keyFound = false;
+  bool isInitialized = false;
 
+  Future<void> initialize({required Session session}) async {
+    currentSession = session;
     _databaseController = Get.put(
       DatabaseController(session: currentSession),
       tag: K.databaseControllerTag,
     );
-    _usersListController = Get.put(
-      UsersListController(currentUserID: currentSession.userId),
-      tag: K.usersListControllerTag,
-    );
-    _notificationController = Get.put(
-      NotificationController(userID: currentSession.userId),
-      tag: K.notificationControllerTag,
-    );
+    _databaseController.initialize(newSession: currentSession);
+    try {
+      _usersListController = Get.put(
+        UsersListController(currentUserID: currentSession.userId),
+        tag: K.usersListControllerTag,
+      );
+    } catch (e) {}
+    _usersListController.setUserID(userID: currentSession.userId);
+    _usersListController.getUsers();
+    try {
+      _notificationController = Get.put(
+        NotificationController(userID: currentSession.userId),
+        tag: K.notificationControllerTag,
+      );
+    } catch (e) {}
+    _notificationController.setUserID(newID: currentSession.userId);
 
     // Gets locally saved user data and updates it with new user data
     final CustomUser? _user = _localStorageController.getUser();
-    bool isInitialized = false;
+
     if (_user != null) {
-      userData = Rx<CustomUser>(_user);
-      isInitialized = true;
+      if (!isInitialized) {
+        userData = Rx<CustomUser>(_user);
+        isInitialized = true;
+      } else {
+        userData.value = _user;
+      }
     }
 
     Document? remoteData =
@@ -63,6 +76,7 @@ class UserController extends GetxController {
         userData.value.chatIDs != null) {
       _usersListController.allUsers.value?.forEach((_user) {
         if (userData.value.chatIDs!.contains(_user.id)) {
+          onGoingChats.clear();
           onGoingChats.add(
               ChatTile(user: _user, messageStatus: MessageStatus.read.obs));
         }

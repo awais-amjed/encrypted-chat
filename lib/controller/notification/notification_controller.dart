@@ -10,7 +10,7 @@ import '../../model/classes/custom_user.dart';
 import '../../model/constants.dart';
 
 class NotificationController extends GetxController {
-  final String userID;
+  String userID;
 
   final RxList<String> notificationsList = <String>[].obs;
 
@@ -25,6 +25,10 @@ class NotificationController extends GetxController {
       Get.find(tag: K.usersListControllerTag);
 
   NotificationController({required this.userID});
+
+  void setUserID({required String newID}) {
+    userID = newID;
+  }
 
   void showNotification({String? name, CustomUser? notifier}) {
     notificationFrom = notifier;

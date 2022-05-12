@@ -10,10 +10,7 @@ class EncryptionController extends GetxController {
   final LocalStorageController _localStorageController =
       Get.find(tag: K.localStorageControllerTag);
 
-  @override
-  void onInit() {
-    super.onInit();
-
+  void readPrivateKey() {
     String? storedPrivateKey = _localStorageController.readPrivateKey();
 
     if (storedPrivateKey != null) {

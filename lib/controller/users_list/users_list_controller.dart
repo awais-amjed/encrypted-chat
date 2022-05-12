@@ -8,15 +8,12 @@ class UsersListController extends GetxController {
   Rxn<List<CustomUser>> allUsers = Rxn<List<CustomUser>>();
   final DatabaseController _databaseController =
       Get.find(tag: K.databaseControllerTag);
-  final String currentUserID;
+  String currentUserID;
 
   UsersListController({required this.currentUserID});
 
-  @override
-  void onInit() async {
-    // TODO: implement onInit
-    super.onInit();
-    await getUsers();
+  void setUserID({required String userID}) {
+    currentUserID = userID;
   }
 
   Future<void> getUsers() async {

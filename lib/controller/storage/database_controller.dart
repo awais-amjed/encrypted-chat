@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class DatabaseController extends GetxController {
   late Database _database;
-  final Session session;
+  Session session;
   late Functions _functions;
   late Realtime _realtime;
 
@@ -21,10 +21,8 @@ class DatabaseController extends GetxController {
   final AppWriteController _appWriteController =
       Get.find(tag: K.appWriteControllerTag);
 
-  @override
-  void onInit() {
-    super.onInit();
-
+  void initialize({required Session newSession}) {
+    session = newSession;
     _database = _appWriteController.database;
     _functions = Functions(_appWriteController.client);
     _realtime = Realtime(_appWriteController.client);

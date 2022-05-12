@@ -47,7 +47,10 @@ class QRCode extends StatelessWidget {
                 );
               } else {}
             },
-            child: const Text('Import'),
+            child: const Text(
+              'Import',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ]),

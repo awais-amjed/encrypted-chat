@@ -1,4 +1,6 @@
+import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/classes/custom_user.dart';
+import 'package:ecat/model/constants.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -7,16 +9,28 @@ class LocalStorageController extends GetxController {
   GetStorage localStorage = GetStorage();
   GetStorage messageStorage = GetStorage('messages');
 
-  final String _privateKeyHolder = 'privateKey';
+  final String _privateKeyHolder = '_privateKey';
   final String _userHolder = 'user';
   final String _themeHolder = 'theme';
 
   String? readPrivateKey() {
-    return localStorage.read(_privateKeyHolder);
+    try {
+      UserController _userController = Get.find(tag: K.userControllerTag);
+      return localStorage
+          .read(_userController.userData.value.id + _privateKeyHolder);
+    } catch (e) {
+      return null;
+    }
   }
 
   void savePrivateKey({required String privateKey}) async {
-    await localStorage.write(_privateKeyHolder, privateKey);
+    try {
+      UserController _userController = Get.find(tag: K.userControllerTag);
+      await localStorage.write(
+          _userController.userData.value.id + _privateKeyHolder, privateKey);
+    } catch (e) {
+      return;
+    }
   }
 
   Future<void> saveUser({required CustomUser user}) async {
