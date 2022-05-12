@@ -1,0 +1,3 @@
+appwrite functions createDeployment --functionId createMessageCollection --entrypoint="lib/main.dart" --code="functions/Create Message Collection" --activate true
+appwrite functions createDeployment --functionId createUserDocument --entrypoint="lib/main.dart" --code="functions/Create User Document" --activate true
+appwrite functions createDeployment --functionId notifyUser --entrypoint="lib/main.dart" --code="functions/Notify User" --activate true
