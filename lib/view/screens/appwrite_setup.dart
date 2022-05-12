@@ -63,8 +63,7 @@ class AppWriteSetup extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   CustomTextField(
-                    initial:
-                        'https://8080-appwrite-integrationfor-o1wbqfvan8m.ws-eu44.gitpod.io/v1',
+                    initial: 'https://192.168.100.2/v1',
                     label: 'Endpoint',
                     image: 'assets/icons/cloud-server.png',
                     onChange: (_) {

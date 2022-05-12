@@ -40,8 +40,7 @@ class AppWriteController extends GetxController {
     }
 
     if (endpoint == null) {
-      client.setEndpoint(
-          'https://8080-appwrite-integrationfor-o1wbqfvan8m.ws-eu44.gitpod.io/v1');
+      client.setEndpoint('https://192.168.100.2/v1');
     } else {
       client.setEndpoint(endpoint);
     }
