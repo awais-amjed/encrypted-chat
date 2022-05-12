@@ -28,7 +28,9 @@ class SplashScreen extends StatelessWidget {
           permanent: true,
         );
         await _userController.initialize(session: session);
-        Get.put<HomeController>(HomeController());
+        try {
+          Get.put<HomeController>(HomeController(), permanent: true);
+        } catch (e) {}
         Get.off(() => const HomeScreen());
       }
     });

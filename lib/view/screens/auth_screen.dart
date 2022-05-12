@@ -108,7 +108,9 @@ class AuthScreen extends StatelessWidget {
               },
               loginAfterSignUp: false,
               onSubmitAnimationCompleted: () {
-                Get.put<HomeController>(HomeController());
+                try {
+                  Get.put<HomeController>(HomeController(), permanent: true);
+                } catch (e) {}
                 Get.offAll(() => const HomeScreen());
               },
               messages: LoginMessages(
