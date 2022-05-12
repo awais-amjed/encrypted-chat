@@ -75,7 +75,7 @@ class AppWriteSetup extends StatelessWidget {
                         'assets/icons/cloud-server.png',
                         width: 50,
                       ),
-                      hintText: '192.168.100.2/v1',
+                      hintText: 'https://192.168.100.2/v1',
                     ),
                     onChanged: (_) {
                       host = _;
@@ -95,7 +95,11 @@ class AppWriteSetup extends StatelessWidget {
                       ),
                       onPressed: () {
                         _appWriteController.updateParams(
-                            id: id, endPoint: host);
+                          id: id,
+                          endPoint: host,
+                          logout: !allowDarkMode,
+                          context: !allowDarkMode ? context : null,
+                        );
                       },
                       child: const Text('Start Destruction'),
                     ),
