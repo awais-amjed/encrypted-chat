@@ -64,6 +64,7 @@ class OngoingChats extends GetView<HomeController> {
                       child: ChatTileWidget(
                         chatTile: _searchController.searchedChats.reversed
                             .elementAt(index),
+                        index: index,
                       ),
                     ),
                   );
@@ -81,6 +82,7 @@ class OngoingChats extends GetView<HomeController> {
                     child: ChatTileWidget(
                       chatTile: _userController.onGoingChats.reversed
                           .elementAt(index),
+                      index: index,
                     ),
                   ),
                 );
