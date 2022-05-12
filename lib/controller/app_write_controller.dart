@@ -105,6 +105,9 @@ class AppWriteController extends GetxController {
       client.setEndpoint(endPoint);
       _local.saveProjectEndpoint(projectEndpoint: endPoint);
     }
+    if (selfSigned) {
+      client.setSelfSigned(status: true);
+    }
     _local.saveSelfSigned(isSelfSigned: selfSigned);
     database = Database(client);
   }

@@ -16,8 +16,9 @@ class AppWriteSetup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String id = '';
-    String host = '';
+    String id = 'ecat';
+    String host =
+        'https://8080-appwrite-integrationfor-o1wbqfvan8m.ws-eu44.gitpod.io/v1';
     final AppWriteController _appWriteController =
         Get.find(tag: K.appWriteControllerTag);
     final ThemeController _themeController =
@@ -143,10 +144,6 @@ class AppWriteSetup extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        if (id == '' && host == '') {
-                          K.showToast(message: "Can't be empty");
-                          return;
-                        }
                         _appWriteController.updateParams(
                           id: id,
                           endPoint: host,
