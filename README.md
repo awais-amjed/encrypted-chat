@@ -34,30 +34,87 @@ docker-compose up -d
 - Signup and remember the credentials - you will need them
 - Create a new Project as shown below `Keep the project id as ecat` unless you want to rebuild your application.
 
-![screenshot](./images/project.png)
+![screenshot](./resources/project.png)
 
 - Create an API Key with atleast these 12 permissions
 
-![screenshot](./images/api.png)
+![screenshot](./resources/api.png)
 
 - Register Your Flutter Project
 
-![screenshot](./images/registration.png)
+![screenshot](./resources/registration.png)
 
 ## Database and Functions
 
-- Download this file
+- Install the [appwrite cli](https://appwrite.io/docs/command-line)
+- Open a directory and login to appwrite cli in a terminal or cmd
+```
+appwrite login
+```
+- Enter credentails used for signing up - Leave host as default unless you know what you are doing
+- Download this script for [windows](./resources/create.cmd) or for [linux](./resources/create.sh)
+- Run the script with following arguments
+For Linux
+```
+./create.sh yourProjectID yourProjectName yourHost yourAPIKey
+```
+For Windows
+```
+./create.cmd yourProjectID yourProjectName yourHost yourAPIKey
+```
+- This will create an appwrte.json in your directory
+- Now Download this [functions.zip](./resources/functions.zip) and extract in the same directory
+- Run the follwing command
+```
+appwrite deploy --all
+```
+- Select all `a` and `enter` then again select all `a` and `enter`
+- This will setup everything for you
 
-### Usage
+## Known Bug
 
-Open index.html in Chrome
+- The above command `appwrite deploy -all` might fail while deploying functions and give you an error `Unexpected token`
+- If that's the case then you will have to create functions manually
+- Open appwrite in browser `localhost:80` and go to functions
+- You have to add three new functions with following ids:
+```
+1. createMessageCollection
+2. createUserDocument
+3. notifyUser
+```
+For all three of these you have to add these variables in the settings
+
+![image](https://user-images.githubusercontent.com/73714615/168171851-8cce52fd-762c-4341-aa7e-53f48191c407.png)
+
+For `createMessageCollection` and `notifyUser` add this in Execute access section:
+```
+role:member
+```
+
+![image](https://user-images.githubusercontent.com/73714615/168172099-7cd029af-2499-4f7a-bc77-750f3191e300.png)
+
+and For `createUserDocument` check the account.create event
+
+![image](https://user-images.githubusercontent.com/73714615/168172332-72fcf10d-4937-4320-bab4-a394051fe608.png)
+
+- Now run these [commands](./resources/commands.txt) one by one in the same directory where you have the appwrite.json and functions
+- After this all your functions will be deployed
+
+## Usage
+
+Open your app and set your parameters by clicking the settings icon on the login screen - Enjoy free and private encrypted chat
+
+## Future Improvements
+
+- Multi Platform Support - especially Web
+- Push Notifications implementation (when appwrite releases support or maybe using firebase)
+- Message Data Persistance
 
 ## Authors
 
-👤 **Author1**
+👤 **Awais Amjed**
 
 - GitHub: [@Awais Amjed](https://github.com/awais-amjed)
-- Website: [@Coding Fries](https://codingfries.com)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/awais-amjed)
 
 ## 🤝 Contributing
@@ -72,4 +129,13 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Microverse
+- FlatIcons - All images used are from [Flaticon](https://www.flaticon.com/) - Love their collections ❤️
+
+## Attributions
+
+- <a href="https://www.flaticon.com/free-icons/cat" title="cat icons">Cat icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/identity" title="identity icons">Identity icons created by srip - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/server" title="server icons">Server icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/access" title="access icons">Access icons created by Eucalyp - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/password" title="password icons">Password icons created by Freepik - Flaticon</a>
