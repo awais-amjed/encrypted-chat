@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../controller/home/home_controller.dart';
+import '../../../controller/notification/notification_controller.dart';
 import '../../screens/auth_screen.dart';
 
 class DrawerScreen extends GetView<HomeController> {
@@ -92,7 +93,11 @@ class DrawerScreen extends GetView<HomeController> {
                         },
                       );
                       if (result == false) {
-                        await _userController.logOut().then((value) {
+                        await _userController.logOut().then((value) async {
+                          final NotificationController _notificationController =
+                              Get.find(tag: K.notificationControllerTag);
+                          await _notificationController.notificationSubscription
+                              .close();
                           Get.offAll(() => const AuthScreen());
                         }).catchError(K.showErrorToast);
                       } else if (result == true) {

@@ -4,6 +4,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:crypton/crypton.dart';
 import 'package:ecat/controller/encryption/encryption_controller.dart';
+import 'package:ecat/controller/notification/notification_controller.dart';
 import 'package:ecat/controller/storage/database_controller.dart';
 import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/classes/custom_user.dart';
@@ -15,6 +16,7 @@ class ChatController extends GetxController {
   final String _partitionsKey = 'partitions';
   final String _dataKey = 'data';
   final int _maxMessagesPerPartition = 50;
+  final String _chatRoute = '/ChatScreen';
 
   final CustomUser user1;
   final CustomUser user2;
@@ -96,6 +98,10 @@ class ChatController extends GetxController {
       }
     }
 
+    subscribeToMessages();
+  }
+
+  void subscribeToMessages() {
     mySubscription =
         _databaseController.subscribeToChat(collectionID: readCollection);
     theirSubscription =
@@ -150,7 +156,9 @@ class ChatController extends GetxController {
           mine: true);
     } catch (e) {
       K.showErrorToast(e);
-      afterMagic(types.Status.error);
+      if (Get.currentRoute == _chatRoute) {
+        afterMagic(types.Status.error);
+      }
       return;
     }
 
@@ -158,7 +166,9 @@ class ChatController extends GetxController {
       Execution? _execution = await _databaseController.createMessageCollection(
           user1: user1.id, user2: user2.id);
       if (_execution == null || _execution.status != 'completed') {
-        afterMagic(types.Status.error);
+        if (Get.currentRoute == _chatRoute) {
+          afterMagic(types.Status.error);
+        }
         return;
       }
       myPartitions.add('1');
@@ -174,7 +184,9 @@ class ChatController extends GetxController {
       partitions: theirPartitions,
     ).then((theirValue) async {
       if (theirValue == null) {
-        afterMagic(types.Status.error);
+        if (Get.currentRoute == _chatRoute) {
+          afterMagic(types.Status.error);
+        }
       } else {
         await addMessageHelper(
           message: jsonEncode(myMessage.toJson()),
@@ -183,9 +195,13 @@ class ChatController extends GetxController {
           partitions: myPartitions,
         ).then((myValue) {
           if (myValue == null) {
-            afterMagic(types.Status.error);
+            if (Get.currentRoute == _chatRoute) {
+              afterMagic(types.Status.error);
+            }
           } else {
-            afterMagic(types.Status.sent);
+            if (Get.currentRoute == _chatRoute) {
+              afterMagic(types.Status.sent);
+            }
 
             if (theirValue.length == 2) {
               theirPartitions = theirValue[1];
@@ -251,7 +267,13 @@ class ChatController extends GetxController {
   bool collectionFound({required String userID}) {
     final List<String>? chatIDs = userController.userData.value.chatIDs;
     if (chatIDs == null || !chatIDs.contains(userID)) {
-      return false;
+      final NotificationController _notificationController =
+          Get.find(tag: K.notificationControllerTag);
+      bool result = _notificationController.notificationsList.contains(userID);
+      if (result) {
+        userController.addChatID(newID: userID, update: true);
+      }
+      return result;
     }
     return true;
   }
@@ -278,7 +300,9 @@ class ChatController extends GetxController {
     try {
       decrypted =
           _encryptionController.decryptMessage(encryptedMessage: message.text);
-    } catch (e) {}
+    } catch (e) {
+      // Ignoring because it shows multiple toasts when decrypting an array.
+    }
     if (decrypted != null) {
       return message.copyWith(text: decrypted) as types.TextMessage;
     }
@@ -349,14 +373,5 @@ class ChatController extends GetxController {
       cursor = previous.toString();
     }
     loadingMoreData = false;
-  }
-
-  @override
-  void dispose() {
-    try {
-      theirSubscription.stream.listen((event) {});
-      mySubscription.stream.listen((event) {});
-    } catch (e) {}
-    super.dispose();
   }
 }

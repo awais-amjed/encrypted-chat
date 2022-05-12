@@ -122,6 +122,7 @@ class AuthController extends GetxController {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
+                const SizedBox(height: 20),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);

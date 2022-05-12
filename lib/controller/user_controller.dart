@@ -72,11 +72,11 @@ class UserController extends GetxController {
       _localStorageController.saveUser(user: userData.value);
     }
 
+    onGoingChats.clear();
     if (_usersListController.allUsers.value != null &&
         userData.value.chatIDs != null) {
       _usersListController.allUsers.value?.forEach((_user) {
         if (userData.value.chatIDs!.contains(_user.id)) {
-          onGoingChats.clear();
           onGoingChats.add(
               ChatTile(user: _user, messageStatus: MessageStatus.read.obs));
         }

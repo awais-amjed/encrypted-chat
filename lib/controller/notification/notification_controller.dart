@@ -18,6 +18,7 @@ class NotificationController extends GetxController {
   RxString message = 'You have a new message'.obs;
   CustomUser? notificationFrom;
   String? currentChat;
+  late RealtimeSubscription notificationSubscription;
 
   final DatabaseController _databaseController =
       Get.find(tag: K.databaseControllerTag);
@@ -84,9 +85,8 @@ class NotificationController extends GetxController {
       }
     }
 
-    RealtimeSubscription _notificationSubscription =
-        _databaseController.subscribeToNotifications();
-    _notificationSubscription.stream.listen((event) async {
+    notificationSubscription = _databaseController.subscribeToNotifications();
+    notificationSubscription.stream.listen((event) async {
       if (event.event == 'database.documents.update') {
         final List<String> newNotifications =
             event.payload['user_ids'].map<String>((e) => e.toString()).toList();
