@@ -5,6 +5,7 @@ import 'package:ecat/model/helper_functions.dart';
 import 'package:ecat/view/widgets/general/custom_padding.dart';
 import 'package:ecat/view/widgets/general/theme_switch_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -19,7 +20,9 @@ class AppWriteSetup extends StatelessWidget {
     String host = '';
     final AppWriteController _appWriteController =
         Get.find(tag: K.appWriteControllerTag);
-    final ThemeController _ = Get.find(tag: K.themeControllerTag);
+    final ThemeController _themeController =
+        Get.find(tag: K.themeControllerTag);
+    RxBool isSelfSigned = false.obs;
 
     return Scaffold(
       appBar: HelperFunctions.getAppBar(title: 'Customize Your Backend'),
@@ -49,6 +52,7 @@ class AppWriteSetup extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    controller: TextEditingController()..text = 'ecat',
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -58,7 +62,6 @@ class AppWriteSetup extends StatelessWidget {
                         'assets/icons/id-card.png',
                         width: 50,
                       ),
-                      hintText: 'ecat',
                     ),
                     onChanged: (_) {
                       id = _;
@@ -66,6 +69,9 @@ class AppWriteSetup extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    controller: TextEditingController()
+                      ..text =
+                          'https://8080-appwrite-integrationfor-o1wbqfvan8m.ws-eu44.gitpod.io/v1',
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -81,7 +87,50 @@ class AppWriteSetup extends StatelessWidget {
                       host = _;
                     },
                   ),
-                  SizedBox(height: 8.h),
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: Text(
+                          'Set as Self Signed?\n- Choose Yes if you are hosting appwrite server on your local network, else you might get certificate error -',
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                      Obx(
+                        () => FlutterSwitch(
+                          width: 80,
+                          onToggle: (bool value) {
+                            isSelfSigned.value = !isSelfSigned.value;
+                          },
+                          value: isSelfSigned.value,
+                          activeColor: _themeController.isDarkMode.value
+                              ? K.darkPrimary
+                              : K.lightSecondary,
+                          activeSwitchBorder: Border.all(
+                            color: _themeController.isDarkMode.value
+                                ? K.darkSecondary
+                                : K.lightSecondary,
+                            width: 2.0,
+                          ),
+                          inactiveColor: _themeController.isDarkMode.value
+                              ? K.darkPrimary
+                              : K.lightSecondary,
+                          inactiveSwitchBorder: Border.all(
+                            color: _themeController.isDarkMode.value
+                                ? K.darkSecondary
+                                : K.lightSecondary,
+                            width: 2.0,
+                          ),
+                          activeText: 'YES',
+                          inactiveText: 'NO',
+                          showOnOff: true,
+                          activeTextColor: Colors.white,
+                          inactiveTextColor: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5.h),
                   SizedBox(
                     height: 50,
                     width: 195,
@@ -94,17 +143,22 @@ class AppWriteSetup extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
+                        if (id == '' && host == '') {
+                          K.showToast(message: "Can't be empty");
+                          return;
+                        }
                         _appWriteController.updateParams(
                           id: id,
                           endPoint: host,
                           logout: !allowDarkMode,
                           context: !allowDarkMode ? context : null,
+                          selfSigned: isSelfSigned.value,
                         );
                       },
                       child: const Text('Start Destruction'),
                     ),
                   ),
-                  if (allowDarkMode) SizedBox(height: 20.h),
+                  if (allowDarkMode) SizedBox(height: 10.h),
                   if (allowDarkMode) const ThemeSwitchButton(),
                 ],
               ),

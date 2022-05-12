@@ -37,10 +37,10 @@ class AuthController extends GetxController {
           password: password,
           name: name,
         )
-        .then((value) => null);
-    //     .catchError((e) {
-    //   error = e.toString();
-    // });
+        .then((value) => null)
+        .catchError((e) {
+      error = e.toString();
+    });
     return error;
   }
 

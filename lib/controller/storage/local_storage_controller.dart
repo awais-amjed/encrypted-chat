@@ -14,6 +14,9 @@ class LocalStorageController extends GetxController {
   final String _userHolder = 'user';
   final String _themeHolder = 'theme';
   final String _sessionHolder = 'session';
+  final String _projectIDHolder = 'projectID';
+  final String _projectEndpointHolder = 'projectEndpoint';
+  final String _isSelfSignedHolder = 'isSelfSigned';
 
   void saveSession({required Session session}) async {
     await localStorage.write(_sessionHolder, session.toMap());
@@ -80,5 +83,29 @@ class LocalStorageController extends GetxController {
 
   void saveTheme({required bool theme}) {
     localStorage.write(_themeHolder, theme);
+  }
+
+  void saveProjectID({required String projectID}) {
+    localStorage.write(_projectIDHolder, projectID);
+  }
+
+  void saveProjectEndpoint({required String projectEndpoint}) {
+    localStorage.write(_projectEndpointHolder, projectEndpoint);
+  }
+
+  String? readProjectID() {
+    return localStorage.read(_projectIDHolder);
+  }
+
+  String? readProjectEndpoint() {
+    return localStorage.read(_projectEndpointHolder);
+  }
+
+  bool? readSelfSigned() {
+    return localStorage.read(_isSelfSignedHolder);
+  }
+
+  void saveSelfSigned({required bool isSelfSigned}) {
+    localStorage.write(_isSelfSignedHolder, isSelfSigned);
   }
 }

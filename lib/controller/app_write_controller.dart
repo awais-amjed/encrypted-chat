@@ -17,15 +17,8 @@ class AppWriteController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // client.setSelfSigned(status: true);
 
-    client.setEndpoint(
-        'https://8080-appwrite-integrationfor-o1wbqfvan8m.ws-eu44.gitpod.io/v1');
-    client.setProject('yolo');
-
-    database = Database(client);
-
-    Get.put(
+    LocalStorageController _local = Get.put(
       LocalStorageController(),
       tag: K.localStorageControllerTag,
       permanent: true,
@@ -35,6 +28,29 @@ class AppWriteController extends GetxController {
       tag: K.encryptionControllerTag,
       permanent: true,
     );
+
+    String? endpoint = _local.readProjectEndpoint();
+    String? projectID = _local.readProjectID();
+    bool? isSelfSigned = _local.readSelfSigned();
+
+    if (projectID == null) {
+      client.setProject('ecat');
+    } else {
+      client.setProject(projectID);
+    }
+
+    if (endpoint == null) {
+      client.setEndpoint(
+          'https://8080-appwrite-integrationfor-o1wbqfvan8m.ws-eu44.gitpod.io/v1');
+    } else {
+      client.setEndpoint(endpoint);
+    }
+
+    if (isSelfSigned == true) {
+      client.setSelfSigned(status: true);
+    }
+
+    database = Database(client);
   }
 
   Future<void> updateParams({
@@ -42,7 +58,11 @@ class AppWriteController extends GetxController {
     required String endPoint,
     bool logout = true,
     BuildContext? context,
+    required bool selfSigned,
   }) async {
+    final LocalStorageController _local =
+        Get.find(tag: K.localStorageControllerTag);
+
     if (logout && context != null) {
       bool? result = await K.showDialog(
         context: context,
@@ -66,8 +86,6 @@ class AppWriteController extends GetxController {
           final NotificationController _notificationController =
               Get.find(tag: K.notificationControllerTag);
           await _notificationController.notificationSubscription.close();
-          final LocalStorageController _local =
-              Get.find(tag: K.localStorageControllerTag);
           _local.deleteSession();
           Get.offAll(() => const AuthScreen());
         }).catchError(K.showErrorToast);
@@ -79,8 +97,15 @@ class AppWriteController extends GetxController {
       Get.back();
     }
 
-    client.setProject(id);
-    client.setEndpoint(endPoint);
+    if (id != '') {
+      client.setProject(id);
+      _local.saveProjectID(projectID: id);
+    }
+    if (endPoint != '') {
+      client.setEndpoint(endPoint);
+      _local.saveProjectEndpoint(projectEndpoint: endPoint);
+    }
+    _local.saveSelfSigned(isSelfSigned: selfSigned);
     database = Database(client);
   }
 }
