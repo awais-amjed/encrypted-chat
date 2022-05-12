@@ -3,6 +3,7 @@ import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:ecat/model/helper_functions.dart';
 import 'package:ecat/view/widgets/general/avatar_widget.dart';
+import 'package:ecat/view/widgets/general/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:get/get.dart' hide MultipartFile;
@@ -19,7 +20,6 @@ class YourSpace extends StatelessWidget {
     final ThemeController _themeController =
         Get.find(tag: K.themeControllerTag);
 
-    final TextEditingController _textController = TextEditingController();
     RxBool uploading = false.obs;
 
     RxnString imagePath = RxnString();
@@ -27,7 +27,6 @@ class YourSpace extends StatelessWidget {
     String oldPassword = '';
     String newPassword = '';
 
-    _textController.text = name;
     imagePath.value = _userController.userData.value.imagePath;
 
     return Scaffold(
@@ -50,7 +49,9 @@ class YourSpace extends StatelessWidget {
                         title: const Text(
                           'Pick an avatar',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         contentPadding: const EdgeInsets.all(10),
                         alignment: Alignment.centerLeft,
@@ -123,19 +124,11 @@ class YourSpace extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 5.h),
-              TextField(
-                controller: _textController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  label: const Text('Your Name'),
-                  icon: Image.asset(
-                    'assets/icons/programmer.png',
-                    width: 50,
-                  ),
-                ),
-                onChanged: (_) {
+              CustomTextField(
+                initial: name,
+                label: 'Your Name',
+                image: 'assets/icons/programmer.png',
+                onChange: (_) {
                   name = _;
                 },
               ),
@@ -144,35 +137,19 @@ class YourSpace extends StatelessWidget {
                 'If you want to update your password',
                 style: TextStyle(fontSize: 12),
               ),
-              const SizedBox(height: 5),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  label: const Text('Old Password'),
-                  icon: Image.asset(
-                    'assets/icons/secure.png',
-                    width: 50,
-                  ),
-                ),
-                onChanged: (_) {
+              const SizedBox(height: 10),
+              CustomTextField(
+                label: 'Old Password',
+                image: 'assets/icons/secure.png',
+                onChange: (_) {
                   oldPassword = _;
                 },
               ),
               const SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  label: const Text('New Password'),
-                  icon: Image.asset(
-                    'assets/icons/secure.png',
-                    width: 50,
-                  ),
-                ),
-                onChanged: (_) {
+              CustomTextField(
+                label: 'New Password',
+                image: 'assets/icons/secure.png',
+                onChange: (_) {
                   newPassword = _;
                 },
               ),

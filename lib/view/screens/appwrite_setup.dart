@@ -3,6 +3,7 @@ import 'package:ecat/controller/theme_controller.dart';
 import 'package:ecat/model/constants.dart';
 import 'package:ecat/model/helper_functions.dart';
 import 'package:ecat/view/widgets/general/custom_padding.dart';
+import 'package:ecat/view/widgets/general/custom_text_field.dart';
 import 'package:ecat/view/widgets/general/theme_switch_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -52,39 +53,21 @@ class AppWriteSetup extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  TextField(
-                    controller: TextEditingController()..text = 'ecat',
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      label: const Text('Project ID'),
-                      icon: Image.asset(
-                        'assets/icons/id-card.png',
-                        width: 50,
-                      ),
-                    ),
-                    onChanged: (_) {
+                  CustomTextField(
+                    initial: 'ecat',
+                    label: 'Project ID',
+                    image: 'assets/icons/id-card.png',
+                    onChange: (_) {
                       id = _;
                     },
                   ),
                   const SizedBox(height: 20),
-                  TextField(
-                    controller: TextEditingController()
-                      ..text =
-                          'https://8080-appwrite-integrationfor-o1wbqfvan8m.ws-eu44.gitpod.io/v1',
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      label: const Text('Endpoint'),
-                      icon: Image.asset(
-                        'assets/icons/cloud-server.png',
-                        width: 50,
-                      ),
-                      hintText: 'https://192.168.100.2/v1',
-                    ),
-                    onChanged: (_) {
+                  CustomTextField(
+                    initial:
+                        'https://8080-appwrite-integrationfor-o1wbqfvan8m.ws-eu44.gitpod.io/v1',
+                    label: 'Endpoint',
+                    image: 'assets/icons/cloud-server.png',
+                    onChange: (_) {
                       host = _;
                     },
                   ),

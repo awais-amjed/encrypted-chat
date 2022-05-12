@@ -6,6 +6,7 @@ import 'package:ecat/view/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
@@ -62,10 +63,11 @@ class ECat extends StatelessWidget {
               prefixIconColor: Colors.black,
               suffixIconColor: Colors.black,
             ),
-            textTheme: const TextTheme(
-              headline1: TextStyle(color: K.whiteText),
-              headline6: TextStyle(color: K.whiteText),
-              bodyText2: TextStyle(color: K.blackText), // text
+            textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+                .copyWith(
+              headline1: const TextStyle(color: K.whiteText),
+              headline6: const TextStyle(color: K.whiteText),
+              bodyText2: const TextStyle(color: K.blackText),
             ),
             buttonTheme: const ButtonThemeData(
               colorScheme: ColorScheme.light(
@@ -80,6 +82,7 @@ class ECat extends StatelessWidget {
             scaffoldBackgroundColor: K.darkPrimary,
             listTileTheme: const ListTileThemeData(
               iconColor: K.whiteText,
+              textColor: Colors.white,
             ),
             dialogTheme: DialogTheme(
               backgroundColor: K.darkSecondary,
@@ -109,10 +112,11 @@ class ECat extends StatelessWidget {
               onSecondary: K.darkPrimary,
               onPrimary: K.darkPrimary,
             ),
-            textTheme: const TextTheme(
-              headline1: TextStyle(color: K.whiteText),
-              headline6: TextStyle(color: K.whiteText),
-              bodyText2: TextStyle(color: K.whiteText), // text
+            textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+                .copyWith(
+              headline1: const TextStyle(color: K.whiteText),
+              headline6: const TextStyle(color: K.whiteText),
+              bodyText2: const TextStyle(color: K.whiteText),
             ),
             buttonTheme: const ButtonThemeData(
               colorScheme: ColorScheme.dark(
