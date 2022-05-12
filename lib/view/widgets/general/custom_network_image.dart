@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomNetworkImage extends StatelessWidget {
@@ -29,11 +28,8 @@ class CustomNetworkImage extends StatelessWidget {
     }
 
     return url != null
-        ? CachedNetworkImage(
-            imageUrl: url ?? '',
-            placeholder: (context, url) => const SizedBox(),
-            errorWidget: (context, url, error) =>
-                Image.asset('assets/images/logo.png'),
+        ? Image.network(
+            url ?? '',
             height: height,
             width: width,
             fit: fit,

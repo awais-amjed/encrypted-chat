@@ -23,7 +23,6 @@ dependencies:
   crypton: ^2.0.3
   flutter_animated_dialog: ^2.0.1
   flutter_chat_ui: ^1.5.8
-  cached_network_image: ^3.2.0
   intl: ^0.17.0
   flutter_zoom_drawer: ^3.0.1
   flutter_switch: ^0.3.2
@@ -34,6 +33,7 @@ dependencies:
   animate_do: ^2.1.0
   image_picker: ^0.8.5+2
   animated_text_kit: ^4.2.1
+  uuid: ^3.0.6
 
 dev_dependencies:
   flutter_test:
