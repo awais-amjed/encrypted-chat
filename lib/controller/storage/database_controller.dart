@@ -183,4 +183,11 @@ class DatabaseController extends GetxController {
     Account account = Account(_appWriteController.client);
     return account.deleteSession(sessionId: session.$id);
   }
+
+  Future updatePassword(
+      {required String oldPassword, required String newPassword}) async {
+    Account _account = Account(_appWriteController.client);
+    return await _account.updatePassword(
+        password: newPassword, oldPassword: oldPassword);
+  }
 }

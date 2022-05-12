@@ -24,7 +24,7 @@ class YourSpace extends StatelessWidget {
 
     RxnString imagePath = RxnString();
     String name = _userController.userData.value.name;
-    String previousPassword = '';
+    String oldPassword = '';
     String newPassword = '';
 
     _textController.text = name;
@@ -150,14 +150,14 @@ class YourSpace extends StatelessWidget {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  label: const Text('Previous Password'),
+                  label: const Text('Old Password'),
                   icon: Image.asset(
                     'assets/icons/secure.png',
                     width: 50,
                   ),
                 ),
                 onChanged: (_) {
-                  previousPassword = _;
+                  oldPassword = _;
                 },
               ),
               const SizedBox(height: 10),
@@ -192,14 +192,41 @@ class YourSpace extends StatelessWidget {
                     onPressed: () async {
                       if (name == _userController.userData.value.name &&
                           imagePath.value ==
-                              _userController.userData.value.imagePath) {
+                              _userController.userData.value.imagePath &&
+                          oldPassword == '' &&
+                          newPassword == '') {
                         K.showToast(message: 'Nothing to Save');
                         Get.back();
+                        return;
+                      }
+
+                      if (oldPassword.length < 8 || newPassword.length < 8) {
+                        K.showToast(
+                            message:
+                                'Password needs to be at least 8 characters long');
+                        return;
                       }
 
                       final DatabaseController _databaseController =
                           Get.find(tag: K.databaseControllerTag);
                       uploading.value = true;
+
+                      bool proceed = false;
+                      await _databaseController
+                          .updatePassword(
+                              oldPassword: oldPassword,
+                              newPassword: newPassword)
+                          .then((value) {
+                        proceed = true;
+                        K.showToast(message: 'Successfully updated Password');
+                      }).catchError((e) {
+                        K.showErrorToast(e);
+                        uploading.value = false;
+                      });
+                      if (!proceed) {
+                        return;
+                      }
+
                       await _databaseController.updateUserData(
                         data: {
                           'name': name,
@@ -207,7 +234,7 @@ class YourSpace extends StatelessWidget {
                         },
                       ).then((value) async {
                         await _userController.updateUserFromRemote();
-                        K.showToast(message: 'Successfully Saved Data');
+                        K.showToast(message: 'Successfully updated Profile');
                         Get.back();
                       }).catchError(K.showErrorToast);
                       uploading.value = false;
