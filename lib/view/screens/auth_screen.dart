@@ -26,6 +26,9 @@ class AuthScreen extends StatelessWidget {
               scrollable: true,
               footer: "YES, IT'S CUTE AND SECURE",
               theme: LoginTheme(
+                pageColorLight: _themeController.isDarkMode.value
+                    ? K.lightSecondary
+                    : K.darkPrimary,
                 bodyStyle: const TextStyle(color: K.blackText),
                 titleStyle: const TextStyle(
                   height: 1.5,
