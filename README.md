@@ -1,8 +1,6 @@
-<img style="width: 130px;" src="https://appwrite.io/images-ee/press/badge-pink-box.svg" alt="Built with Appwrite">&nbsp;&nbsp;&nbsp;
-<img style="height: 65px;" src="https://storage.googleapis.com/cms-storage-bucket/916809aa4c8f73ad70d2.svg" alt="Built with Flutter">
-
-<br>
-<br>
+<img style="width: 130px;" src="https://appwrite.io/images-ee/press/badge-pink-box.svg" alt="Built with Appwrite" align="right"/>&nbsp;&nbsp;&nbsp;
+<img style="height: 63px;" src="https://storage.googleapis.com/cms-storage-bucket/916809aa4c8f73ad70d2.svg" alt="Built with Flutter" align="right"/>
+<img style="width: 85px" src="assets/images/logo.png" />
 
 # Encrypted Chat
 
@@ -10,7 +8,7 @@
 
 ![screenshot](./app_screenshot.png)
 
-With the power of Flutter and Appwrite, you can easily host your personal Encrypted chat system and this app demonstrates just how simple it can be.
+With the power of Flutter and Appwrite, you can easily host your personal Encrypted chat system and this app demonstrates just how simple it can be. No more fear of being snooped, since you have all the control over your messages that are secured using a private key - and an even more awesome thing is that it's open source so you can modify it to make it however you want it to be. The encryption is based on public-private key pairs where private key is genrated on device and you can keep a backup of it using a QR code generated inside the app, which makes switching devices easy without data loss. The theme is based on appwrite's website - and everything else is just CUTE AND SECURE.
 
 ## Getting Started
 
@@ -108,6 +106,7 @@ Open your app and set your parameters by clicking the settings icon on the login
 
 - Multi Platform Support - especially Web
 - Push Notifications implementation (when appwrite releases support or maybe using firebase)
+- File Transfer - soon
 - Message Data Persistance
 
 ## Authors
