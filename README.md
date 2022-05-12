@@ -10,11 +10,11 @@
 
 With the power of Flutter and Appwrite, you can easily host your personal Encrypted chat system and this app demonstrates just how simple it can be. No more fear of being snooped, since you have all the control over your messages that are secured using a private key - and an even more awesome thing is that it's open source so you can modify it to make it however you want it to be. The encryption is based on public-private key pairs where private key is genrated on device and you can keep a backup of it using a QR code generated inside the app, which makes switching devices easy without data loss. The theme is based on appwrite's website - and everything else is just CUTE AND SECURE.
 
-## Getting Started
+## Getting Started &nbsp; <img src="./resources/run.png" height="30" align="justify"/>
 
 To get a local copy up and running follow these steps.
 
-# Setup Instructions
+# Setup Instructions &nbsp; <img src="./resources/computer.png" height="30" align="justify"/>
 
 ## Appwrite Installation
 - Follow the steps mentioned on the official appwrite website for [instllation](https://appwrite.io/docs/installation) with docker
@@ -27,7 +27,7 @@ docker-compose up -d
 ```
 - This completes the docker setup
 
-## Project Setup
+## Project Setup &nbsp; <img src="./resources/project_icon.png" height="30" align="justify"/>
 - Open a browser and go to the `localhost:80` or if you set some other port
 - Signup and remember the credentials - you will need them
 - Create a new Project as shown below `Keep the project id as ecat` unless you want to rebuild your application.
@@ -42,7 +42,7 @@ docker-compose up -d
 
 ![screenshot](./resources/registration.png)
 
-## Database and Functions
+## Database and Functions &nbsp; <img src="./resources/database-storage.png" height="30" align="justify"/>
 
 - Install the [appwrite cli](https://appwrite.io/docs/command-line)
 - Open a directory and login to appwrite cli in a terminal or cmd
@@ -69,7 +69,7 @@ appwrite deploy --all
 - Select all `a` and `enter` then again select all `a` and `enter`
 - This will setup everything for you
 
-## Known Bug
+# Known Bug &nbsp; <img src="./resources/bug.png" height="30" align="justify"/>
 
 - The above command `appwrite deploy -all` might fail while deploying functions and give you an error `Unexpected token`
 - If that's the case then you will have to create functions manually
@@ -98,18 +98,18 @@ and For `createUserDocument` check the account.create event
 - Now run these [commands](./resources/commands.txt) one by one in the same directory where you have the appwrite.json and functions
 - After this all your functions will be deployed
 
-## Usage
+## Usage &nbsp; <img src="./resources/smartphone.png" height="30" align="justify"/>
 
 Download the apk, install and Open your app - Set your setup information by clicking the settings icon on the login screen - Enjoy free and private encrypted chat
 
-## Future Improvements
+# Future Improvements &nbsp; <img src="./resources/virtual-reality.png" height="30" align="justify"/>
 
 - Multi Platform Support - especially Web
 - Push Notifications implementation (when appwrite releases support or maybe using firebase)
 - File Transfer - soon
 - Message Data Persistance
 
-## Authors
+## Authors &nbsp; <img src="./resources/poem.png" height="30" align="justify"/>
 
 👤 **Awais Amjed**
 
@@ -122,11 +122,11 @@ Contributions, issues, and feature requests are welcome!
 
 Feel free to check the [issues page](../../issues/).
 
-## Show your support
+## Show your support &nbsp; <img src="./resources/support.png" height="30" align="justify"/>
 
 Give a ⭐️ if you like this project!
 
-## Acknowledgments
+## Acknowledgments &nbsp; <img src="./resources/medal.png" height="30" align="justify"/>
 
 - FlatIcons - All images used are from [Flaticon](https://www.flaticon.com/) - Love their collections ❤️
 
@@ -138,3 +138,15 @@ Give a ⭐️ if you like this project!
 - <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/access" title="access icons">Access icons created by Eucalyp - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/password" title="password icons">Password icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/feature" title="feature icons">Feature icons created by Flat Icons - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/computer" title="computer icons">Computer icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/run" title="run icons">Run icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/install" title="install icons">Install icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/project" title="project icons">Project icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/database" title="database icons">Database icons created by phatplus - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/bug" title="bug icons">Bug icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/app" title="app icons">App icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/vr" title="vr icons">Vr icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/poem" title="poem icons">Poem icons created by Smashicons - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/collaboration" title="collaboration icons">Collaboration icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/quality" title="quality icons">Quality icons created by Freepik - Flaticon</a>
