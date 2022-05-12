@@ -21,6 +21,14 @@
 #
 With the power of Flutter, Appwrite, and this app, you can easily host your Encrypted chat system in a few simple steps. No more fear of being snooped on, since you have all the control over your messages that are secured using a private key - and an even more awesome thing is that it's open-source so you can modify it to make it however you want it to be. The encryption is based on public-private key pairs where the private key is generated on the device and you can keep a backup of it using a QR code generated inside the app, which makes switching devices easy without data loss. The theme is based on Appwrite's website - and everything else is just CUTE AND SECURE.
 
+# Top Features &nbsp; <img src="./resources/run.png" height="30" align="justify"/>
+
+- End To End Encrypted
+- Self Hosted
+- Private and Secure
+- Realtime Chat and Notifications
+- Beautiful Animations & avatars
+
 ## Getting Started &nbsp; <img src="./resources/run.png" height="30" align="justify"/>
 
 To get a local copy up and running follow these steps.
