@@ -27,9 +27,11 @@ class OngoingChats extends GetView<HomeController> {
           onPressed: () {
             controller.toggleDrawer();
           },
-          icon: AvatarWidget(
-            size: 40,
-            image: _userController.userData.value.imagePath,
+          icon: Obx(
+            () => AvatarWidget(
+              size: 40,
+              image: _userController.userData.value.imagePath,
+            ),
           ),
         ),
         actions: [

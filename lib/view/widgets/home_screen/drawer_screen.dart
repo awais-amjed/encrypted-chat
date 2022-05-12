@@ -29,10 +29,12 @@ class DrawerScreen extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Center(
-                child: AvatarWidget(
-                  size: 80,
-                  image: _userController.userData.value.imagePath,
+              Obx(
+                () => Center(
+                  child: AvatarWidget(
+                    size: 80,
+                    image: _userController.userData.value.imagePath,
+                  ),
                 ),
               ),
               const SizedBox(height: 15),

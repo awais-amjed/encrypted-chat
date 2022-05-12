@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:appwrite/appwrite.dart';
 import 'package:ecat/controller/theme_controller.dart';
 import 'package:ecat/controller/user_controller.dart';
 import 'package:ecat/model/constants.dart';
@@ -9,10 +6,9 @@ import 'package:ecat/view/widgets/general/avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:get/get.dart' hide MultipartFile;
-import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../controller/app_write_controller.dart';
+import '../../controller/storage/database_controller.dart';
 
 class YourSpace extends StatelessWidget {
   const YourSpace({Key? key}) : super(key: key);
@@ -24,20 +20,15 @@ class YourSpace extends StatelessWidget {
         Get.find(tag: K.themeControllerTag);
 
     final TextEditingController _textController = TextEditingController();
+    RxBool uploading = false.obs;
 
-    Rxn<File> imageFile = Rxn<File>();
     RxnString imagePath = RxnString();
     String name = _userController.userData.value.name;
     String previousPassword = '';
     String newPassword = '';
 
     _textController.text = name;
-
     imagePath.value = _userController.userData.value.imagePath;
-
-    final AppWriteController _appWriteController =
-        Get.find(tag: K.appWriteControllerTag);
-    Storage _storage = Storage(_appWriteController.client);
 
     return Scaffold(
       appBar: HelperFunctions.getAppBar(
@@ -51,65 +42,45 @@ class YourSpace extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   int? index;
-                  bool? result = await K.showDialog(
-                    context: context,
-                    title: 'Where do you want to pick from?',
-                    cancelText: 'Avatar',
-                    confirmText: 'Gallery',
-                    onConfirm: () async {
-                      final XFile? image = await ImagePicker()
-                          .pickImage(source: ImageSource.gallery);
-                      if (image == null) {
-                        return;
-                      }
-                      imageFile.value = File(image.path);
-                    },
-                    onCancel: () async {
-                      return true;
-                    },
-                  );
 
-                  if (result == true) {
-                    index = await showAnimatedDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: const Text(
-                            'Pick an avatar',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          contentPadding: const EdgeInsets.all(10),
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            Wrap(
-                              children: List.generate(
-                                47,
-                                (index) => GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(context, index);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(
-                                      'assets/images/saved/kitty ($index).png',
-                                      height: 50,
-                                    ),
+                  index = await showAnimatedDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SimpleDialog(
+                        title: const Text(
+                          'Pick an avatar',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        contentPadding: const EdgeInsets.all(10),
+                        alignment: Alignment.centerLeft,
+                        children: [
+                          Wrap(
+                            children: List.generate(
+                              47,
+                              (index) => GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context, index);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(
+                                    'assets/images/saved/kitty ($index).png',
+                                    height: 50,
                                   ),
                                 ),
                               ),
-                              alignment: WrapAlignment.center,
                             ),
-                          ],
-                        );
-                      },
-                      animationType: DialogTransitionType.scale,
-                      duration: const Duration(milliseconds: 300),
-                    );
-                  }
+                            alignment: WrapAlignment.center,
+                          ),
+                        ],
+                      );
+                    },
+                    animationType: DialogTransitionType.scale,
+                    duration: const Duration(milliseconds: 300),
+                  );
 
                   if (index != null) {
-                    imageFile.value = null;
                     imagePath.value = 'assets/images/saved/kitty ($index).png';
                   }
                 },
@@ -121,7 +92,7 @@ class YourSpace extends StatelessWidget {
                         () => AvatarWidget(
                           size: 130,
                           image: imagePath.value,
-                          imageFile: imageFile.value,
+                          imageFile: null,
                           borderWidth: 10,
                         ),
                       ),
@@ -209,33 +180,42 @@ class YourSpace extends StatelessWidget {
               SizedBox(
                 height: 50,
                 width: 195,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                child: Obx(
+                  () => ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ),
+                    onPressed: () async {
+                      if (name == _userController.userData.value.name &&
+                          imagePath.value ==
+                              _userController.userData.value.imagePath) {
+                        K.showToast(message: 'Nothing to Save');
+                        Get.back();
+                      }
+
+                      final DatabaseController _databaseController =
+                          Get.find(tag: K.databaseControllerTag);
+                      uploading.value = true;
+                      await _databaseController.updateUserData(
+                        data: {
+                          'name': name,
+                          'image_path': imagePath.value,
+                        },
+                      ).then((value) async {
+                        await _userController.updateUserFromRemote();
+                        K.showToast(message: 'Successfully Saved Data');
+                        Get.back();
+                      }).catchError(K.showErrorToast);
+                      uploading.value = false;
+                    },
+                    child: uploading.value
+                        ? const CircularProgressIndicator()
+                        : const Text('Confirm'),
                   ),
-                  onPressed: () async {
-                    // final DatabaseController _databaseController =
-                    //     Get.find(tag: K.databaseControllerTag);
-                    // if (name != '') {
-                    //   _databaseController.updateUserData(data: {});
-                    // }
-                    _storage.createFile(
-                      bucketId: 'avatars',
-                      fileId: 'userID',
-                      file: InputFile(
-                        file: await MultipartFile.fromPath(
-                          'file',
-                          imageFile.value!.path,
-                        ),
-                        path: imageFile.value!.path,
-                      ),
-                    );
-                  },
-                  child: const Text('Update Data'),
                 ),
               ),
             ],
