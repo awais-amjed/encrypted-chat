@@ -1,6 +1,6 @@
 <img style="width: 130px;" src="https://appwrite.io/images-ee/press/badge-pink-box.svg" alt="Built with Appwrite" align="right"/>&nbsp;&nbsp;&nbsp;
 <img style="height: 63px;" src="https://storage.googleapis.com/cms-storage-bucket/916809aa4c8f73ad70d2.svg" alt="Built with Flutter" align="right"/>
-<img style="width: 85px" src="assets/images/logo.png" />
+<img style="width: 85px" src="https://user-images.githubusercontent.com/73714615/168187249-9a98411f-43d5-40d1-909d-0876352ab0dd.png" />
 
 # Encrypted Chat
 
@@ -9,13 +9,13 @@
 <br>
 <br>
 <p style="display: flex; align-items: start; gap: 10px">
-  <img src="/resources/screenshot1.png" width="13.5%" />
-  <img src="/resources/screenshot2.png" width="13.5%" />
-  <img src="/resources/screenshot3.png" width="13.5%" />
-  <img src="/resources/screenshot4.png" width="13.5%" />
-  <img src="/resources/screenshot5.png" width="13.5%" />
-  <img src="/resources/screenshot6.png" width="13.5%" />
-  <img src="/resources/screenshot7.png" width="13.5%" />
+  <img src="https://user-images.githubusercontent.com/73714615/168186996-b98e2c0f-7ed3-4f97-8ab1-f331e76b4ac7.png" width="13.5%" />
+  <img src="https://user-images.githubusercontent.com/73714615/168187157-38f1efd8-03f3-4f96-b533-692baea4ec01.png" width="13.5%" />
+  <img src="https://user-images.githubusercontent.com/73714615/168187162-a968c012-5e54-4aad-b979-5809a13dd206.png" width="13.5%" />
+  <img src="https://user-images.githubusercontent.com/73714615/168187170-c3ade25e-be0b-4dfd-8878-ac170ad7bffd.png" width="13.5%" />
+  <img src="https://user-images.githubusercontent.com/73714615/168187022-28bea1e7-a7b7-4854-b276-e459a83c4c6a.png" width="13.5%" />
+  <img src="https://user-images.githubusercontent.com/73714615/168187177-b8498961-d363-4898-8d90-f421051fb118.png" width="13.5%" />
+  <img src="https://user-images.githubusercontent.com/73714615/168187032-6b248e11-b876-46d3-a77a-e1eb302e37a3.png" width="13.5%" />
 </p>
 
 #
