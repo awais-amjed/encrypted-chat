@@ -1,8 +1,9 @@
-<img style="width: 130px;" src="https://appwrite.io/images-ee/press/badge-pink-box.svg" alt="Built with Appwrite" align="right"/>&nbsp;&nbsp;&nbsp;
-<img style="height: 63px;" src="https://storage.googleapis.com/cms-storage-bucket/916809aa4c8f73ad70d2.svg" alt="Built with Flutter" align="right"/>
-<img style="width: 85px" src="https://user-images.githubusercontent.com/73714615/168187249-9a98411f-43d5-40d1-909d-0876352ab0dd.png" />
+<img style="height: 110px;" src="https://github.com/awais-amjed/encrypted-chat/assets/73714615/56e6e249-b179-4a40-b542-0a56fa12bda1" alt="Built with Appwrite" align="right"/>&nbsp;&nbsp;&nbsp;
+<img style="height: 100px;" src="https://github.com/awais-amjed/encrypted-chat/assets/73714615/fa4e70f3-3927-4fea-9bfb-a087604f5ee6" alt="Built with Flutter" align="right"/>
+<img style="height: 100px" src="https://user-images.githubusercontent.com/73714615/168187249-9a98411f-43d5-40d1-909d-0876352ab0dd.png" />
 
 # Encrypted Chat
+
 
 > Self Hosted End to End Encrypted Chat System
 
